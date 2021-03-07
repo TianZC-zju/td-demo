@@ -1,14 +1,24 @@
 import React from 'react';
 import './App.css';
 // import SiderDemo from './stu/ActivityManagement'
-import SiderDemo from './trainingInst/TrainingInstPublic'
+import TrainingInstPublic from './trainingInst/TrainingInstPublic'
 import Header from "./public/Header"
+import HomePage from "./stu/HomePage"
+import {
+    BrowserRouter as Router,
+    Switch,
+    Route
+} from "react-router-dom";
 
 const App = () => (
-    <div className="App">
+    <Router className="App">
             <Header />
-            <SiderDemo/>
-    </div>
+            <Switch>
+                <Route exact path="/"><HomePage/></Route>
+                <Route  path="/personInformation"><TrainingInstPublic/></Route>
+            </Switch>
+
+    </Router>
 );
 
 export default App;

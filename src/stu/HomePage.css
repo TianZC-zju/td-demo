@@ -1,0 +1,51 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.Homepage{
+    width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 3px;
+    background-color: white;
+}
+.courseCards{
+    width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+}
+.courseCards > .zjc{
+
+    display: flex;
+    flex-wrap: wrap;
+    margin-left: -50px;
+    margin-right: -50px;
+}
+.courseCards  .card{
+    margin-top:10px;
+    width: 200px;
+    height: 250px;
+    border: 2px solid #F0F0F0;
+    margin-right: 50px;
+    margin-left: 50px;
+}
+.myimg{
+    display: flex;
+    justify-content: center;
+}
+.card > .content{
+    padding: 10px;
+}
+.card  .activityName{
+    font-weight: bold;
+}
+.card  .insName{
+    opacity: 0.6;
+}
+.card  .description{
+    border-top: 1px solid #001529 ;
+    margin-top: 20px;
+    opacity: 0.6;
+}

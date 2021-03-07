@@ -2,7 +2,9 @@ import React from 'react';
 import "./Header.css"
 import {Menu} from 'antd'
 import SuperIcon from './iconfront'
-
+import {
+    Link
+} from "react-router-dom";
 const Header=()=>{
 
     return(
@@ -12,7 +14,7 @@ const Header=()=>{
                 <Menu mode="horizontal" theme="dark">
                     <Menu.Item style={{fontSize:"1.1rem"}}>
                         <SuperIcon type="icon-shouye" />
-                        首页
+                        <Link to="/">首页</Link>
                     </Menu.Item>
                     <Menu.Item style={{fontSize:"1.1rem"}}>
                         <SuperIcon type="icon-about" />
@@ -24,10 +26,12 @@ const Header=()=>{
                     </Menu.Item>
                 </Menu>
             </div>
-            <div className="personInformation">
-                <SuperIcon type="icon-wodedianji" width="30px"/>
-                <div className="personHub">个人中心</div>
-            </div>
+            <Link to="/personInformation">
+                <div className="personInformation">
+                        <SuperIcon type="icon-wodedianji" width="30px"/>
+                        <div className="personHub">个人中心</div>
+                </div>
+            </Link>
         </div>
     )
 }

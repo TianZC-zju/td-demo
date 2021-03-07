@@ -5,13 +5,15 @@ import './CourseList.css'
 import SuperIcon from "../public/iconfront"
 
 const fakeDataUrl = `https://www.fastmock.site/mock/9142235e76a55a305826abc2ebab29af/trainingInst/courses`;
-
+const DataUrl = `lyxkaka.u1.luyouxia.net:50728/trainingInst/course`
 const   CourseList = (props)=>{
 
     const [courseList, setCourseList] = useState([])
 
     useEffect(()=>{
-        axios.get(fakeDataUrl).then(res=>{setCourseList(res.data.data)})
+        axios.get(fakeDataUrl).then(res=>{
+            console.log(res.data)
+            setCourseList(res.data.data)})
     }, [])
 
     return(
@@ -35,14 +37,14 @@ const   CourseList = (props)=>{
 
                         <List.Item.Meta
                             avatar={
-                                <SuperIcon className="hj" type="icon-huojian" />
+                                <SuperIcon className="kc" type="icon-biaoqiankuozhan_kecheng-131" />
                             }
                             title={item.name}
-                            description={"通过分数: "+item.passScore}
+                            description={"所属培训机构:"+item.institutionName+" 通过分数: "+item.passScore}
 
                         />
                         <div className="Time" >{item.startTime.toString().split("T")[0] +` - `+item.endTime.toString().split("T")[0] }</div>
-                        <div className="certificateState">{item.certificateState?"已获得证书":"未获得证书"}</div>
+                        <div className="certificateState">{item.teachers.map(it=>it.name+" ")}</div>
                     </Skeleton>
                 </List.Item>
             )}
