@@ -3,7 +3,7 @@ import "../App.css"
 import { Layout, Menu, Breadcrumb } from 'antd';
 
 import SuperIcon from "../public/iconfront"
-import StuList from './StuList2'
+import CourseList from "./CourseList"
 
 const {  Content, Footer, Sider } = Layout;
 
@@ -14,11 +14,10 @@ class SiderDemo extends React.Component {
     };
 
     onCollapse = collapsed => {
-        console.log(collapsed);
         this.setState({ collapsed });
     };
-
     render() {
+
         const { collapsed } = this.state;
         return (
             <>
@@ -27,13 +26,22 @@ class SiderDemo extends React.Component {
                         <div className="logo" />
                         <Menu theme="dark" defaultSelectedKeys={['1']} mode="inline">
                             <Menu.Item key="1" icon={<SuperIcon type="icon-caidaniconwodehui"/>}>
-                                个人信息
+                                创建活动
                             </Menu.Item>
                             <Menu.Item key="2" icon={<SuperIcon type="icon-huodong"/>}>
                                 活动管理
                             </Menu.Item>
                             <Menu.Item key="3" icon={<SuperIcon type="icon-zhengshu"/>}>
-                                我的证书
+                                创建课程
+                            </Menu.Item>
+                            <Menu.Item key="4" icon={<SuperIcon type="icon-caidaniconwodehui"/>}>
+                                课程管理
+                            </Menu.Item>
+                            <Menu.Item key="5" icon={<SuperIcon type="icon-huodong"/>}>
+                                学员管理
+                            </Menu.Item>
+                            <Menu.Item key="6" icon={<SuperIcon type="icon-zhengshu"/>}>
+                                机构信息维护
                             </Menu.Item>
 
                         </Menu>
@@ -43,11 +51,11 @@ class SiderDemo extends React.Component {
                         <Content style={{ margin: '0 16px' }}>
                             <Breadcrumb style={{ margin: '16px 0' }}>
                                 <Breadcrumb.Item>首页</Breadcrumb.Item>
-                                <Breadcrumb.Item>用户</Breadcrumb.Item>
-                                <Breadcrumb.Item>活动管理</Breadcrumb.Item>
+                                <Breadcrumb.Item>培训机构管理</Breadcrumb.Item>
+                                <Breadcrumb.Item>课程管理</Breadcrumb.Item>
                             </Breadcrumb>
                             <div className="site-layout-background" style={{ padding: 24, minHeight: 360 }}>
-                               <StuList/>
+                                <CourseList/>
 
                             </div>
                         </Content>

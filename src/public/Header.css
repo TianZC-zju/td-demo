@@ -1,0 +1,40 @@
+#header{
+    background-color: #001529;
+    padding: .4rem;
+    overflow: hidden;
+    height: 3.2rem;
+    display:flex;
+    justify-content: space-between;
+}
+#header > .logo{
+    color: #1890ff;
+    cursor: pointer;
+    background-color: transparent;
+    display: flex;
+    align-items: center;
+    font-size: 1.8rem;
+}
+#header > .listAll{
+    color: #1890ff;
+    display: flex;
+    align-items: center;
+}
+#header > .listAll > Menu{
+
+}
+
+#header > .personInformation{
+    display: flex;
+    width: 80px;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+}
+
+#header > .personInformation > .personHub{
+    color: white;
+}
+#header > .personInformation > SuperIcon{
+    width: 50px;
+    margin-left: 10px;
+}
