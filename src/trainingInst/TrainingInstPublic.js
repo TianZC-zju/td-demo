@@ -4,6 +4,13 @@ import { Layout, Menu, Breadcrumb } from 'antd';
 
 import SuperIcon from "../public/iconfront"
 import CourseList from "./CourseList"
+import TIActivityManagement from './TrainingInstActivityManagement'
+import {
+    BrowserRouter as Router,
+    Switch,
+    Route,
+    Link
+} from "react-router-dom";
 
 const {  Content, Footer, Sider } = Layout;
 
@@ -16,26 +23,29 @@ class SiderDemo extends React.Component {
     onCollapse = collapsed => {
         this.setState({ collapsed });
     };
-    render() {
 
+    render() {
+        const switchItem =e=>{
+            console.log(e)
+        }
         const { collapsed } = this.state;
         return (
-            <>
+            <Router>
                 <Layout style={{ minHeight: '100vh' }}>
-                    <Sider collapsible collapsed={collapsed} onCollapse={this.onCollapse}>
+                    <Sider collapsible collapsed={collapsed} onCollapse={this.onCollapse} >
                         <div className="logo" />
-                        <Menu theme="dark" defaultSelectedKeys={['1']} mode="inline">
+                        <Menu theme="dark" defaultSelectedKeys={['1']} mode="inline" onClick={e=>{switchItem(e)}}>
                             <Menu.Item key="1" icon={<SuperIcon type="icon-caidaniconwodehui"/>}>
                                 创建活动
                             </Menu.Item>
                             <Menu.Item key="2" icon={<SuperIcon type="icon-huodong"/>}>
-                                活动管理
+                                <Link to="/ActivityManagement">活动管理</Link>
                             </Menu.Item>
                             <Menu.Item key="3" icon={<SuperIcon type="icon-zhengshu"/>}>
                                 创建课程
                             </Menu.Item>
                             <Menu.Item key="4" icon={<SuperIcon type="icon-caidaniconwodehui"/>}>
-                                课程管理
+                                <Link to="/CourseManagement">课程管理</Link>
                             </Menu.Item>
                             <Menu.Item key="5" icon={<SuperIcon type="icon-huodong"/>}>
                                 学员管理
@@ -55,7 +65,11 @@ class SiderDemo extends React.Component {
                                 <Breadcrumb.Item>课程管理</Breadcrumb.Item>
                             </Breadcrumb>
                             <div className="site-layout-background" style={{ padding: 24, minHeight: 360 }}>
-                                <CourseList/>
+                                <Switch>
+                                    <Route path="/ActivityManagement"><TIActivityManagement/></Route>
+                                    <Route path="/CourseManagement"><CourseList/></Route>
+                                </Switch>
+
 
                             </div>
                         </Content>
@@ -65,7 +79,7 @@ class SiderDemo extends React.Component {
 
 
 
-            </>
+            </Router>
 
         );
     }
