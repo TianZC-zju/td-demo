@@ -1,7 +1,7 @@
 import React from 'react';
 import './App.css';
-// import SiderDemo from './stu/ActivityManagement'
-import TrainingInstPublic from './trainingInst/TrainingInstPublic'
+import ActivityManagement from './stu/ActivityManagement'
+import InstIndex from './trainingInst/index'
 import Header from "./public/Header"
 import HomePage from "./stu/HomePage"
 import {
@@ -15,7 +15,7 @@ const App = () => (
             <Header />
             <Switch>
                 <Route exact path="/"><HomePage/></Route>
-                <Route  path="/personInformation"><TrainingInstPublic/></Route>
+                <Route  path="/personInformation"><InstIndex/></Route>
             </Switch>
 
     </Router>

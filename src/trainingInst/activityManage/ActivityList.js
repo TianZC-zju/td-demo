@@ -1,12 +1,12 @@
 import { List, Skeleton } from 'antd';
 import React, {useEffect, useState} from 'react'
 import axios from 'axios';
-import './CourseList.css'
-import SuperIcon from "../public/iconfront"
+import '../courseManage/CourseList.css'
+import SuperIcon from "../../public/iconfront"
 
 const fakeDataUrl2 = `https://www.fastmock.site/mock/76531f6c539f5dbd8b4fa43216bb135a/student/customer/activityManage`;
 
-const TIActivityManagement = (props)=>{
+const ActivityList = (props)=>{
     const [activityList, setActivityList] = useState([])
     useEffect(()=>{
         axios({method: "post",
@@ -52,4 +52,4 @@ const TIActivityManagement = (props)=>{
         />
     )
 }
-export default TIActivityManagement
+export default ActivityList

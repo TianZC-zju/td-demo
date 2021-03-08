@@ -2,7 +2,7 @@ import { List, Skeleton } from 'antd';
 import React, {useEffect, useState} from 'react'
 import axios from 'axios';
 import './CourseList.css'
-import SuperIcon from "../public/iconfront"
+import SuperIcon from "../../public/iconfront"
 
 const fakeDataUrl = `https://www.fastmock.site/mock/9142235e76a55a305826abc2ebab29af/trainingInst/courses`;
 const DataUrl = `lyxkaka.u1.luyouxia.net:50728/trainingInst/course`
