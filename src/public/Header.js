@@ -26,7 +26,7 @@ const Header=()=>{
                     </Menu.Item>
                 </Menu>
             </div>
-            <Link to="/personInformation">
+            <Link to="/stu">
                 <div className="personInformation">
                         <SuperIcon type="icon-wodedianji" width="30px"/>
                         <div className="personHub">个人中心</div>

@@ -1,4 +1,4 @@
-import TrainingInstMenu from "./TrainingInstMenu"
+import TrainingInstMenu from "./MenuList"
 import { Menu} from "antd"
 import SuperIcon from "../public/iconfront"
 import {Link} from "react-router-dom"

@@ -8,8 +8,8 @@ const MyBreadcrumb=()=>{
             <Breadcrumb.Item>首页</Breadcrumb.Item>
             <Breadcrumb.Item>培训机构管理</Breadcrumb.Item>
             <Switch>
-                <Route path="/ActivityManagement"><Breadcrumb.Item>活动管理</Breadcrumb.Item></Route>
-                <Route path="/CourseManagement"><Breadcrumb.Item>课程管理</Breadcrumb.Item></Route>
+                <Route path="/ins/ActivityManagement"><Breadcrumb.Item>活动管理</Breadcrumb.Item></Route>
+                <Route path="/ins/CourseManagement"><Breadcrumb.Item>课程管理</Breadcrumb.Item></Route>
             </Switch>
         </Breadcrumb>
     )

@@ -3,36 +3,36 @@ export default [
         key:1,
         iconType:"icon-caidaniconwodehui",
         itemName:"创建活动",
-        linkTo:"/newActivity"
+        linkTo:"/ins/newActivity"
     },
     {
         key:2,
         iconType:"icon-huodong",
         itemName:"活动管理",
-        linkTo:"/ActivityManagement"
+        linkTo:"/ins/ActivityManagement"
     },
     {
         key:3,
         iconType:"icon-zhengshu",
         itemName:"创建课程",
-        linkTo:"/newCourse"
+        linkTo:"/ins/newCourse"
     },
     {
         key:4,
         iconType:"icon-caidaniconwodehui",
         itemName:"课程管理",
-        linkTo:"/CourseManagement"
+        linkTo:"/ins/CourseManagement"
     },
     {
         key:5,
         iconType:"icon-huodong",
         itemName:"学员管理",
-        linkTo:"/studentManage"
+        linkTo:"/ins/studentManage"
     },
     {
         key:6,
         iconType:"icon-zhengshu",
         itemName:"机构信息维护",
-        linkTo:"/insInformationManage"
+        linkTo:"/ins/insInformationManage"
     },
 ]

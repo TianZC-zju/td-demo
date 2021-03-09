@@ -85,7 +85,6 @@ const HomePage =()=>{
                                 <div className="insName">{it.insName}</div>
                                 <div className="description">{it.description}</div>
                             </div>
-
                         </div>)}
 
 

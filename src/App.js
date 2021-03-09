@@ -1,9 +1,10 @@
 import React from 'react';
 import './App.css';
-import ActivityManagement from './stu/ActivityManagement'
+
 import InstIndex from './trainingInst/index'
+import StuIndex from "./stu/index"
 import Header from "./public/Header"
-import HomePage from "./stu/HomePage"
+import HomePage from "./stu/activityManage/HomePage"
 import {
     BrowserRouter as Router,
     Switch,
@@ -15,7 +16,8 @@ const App = () => (
             <Header />
             <Switch>
                 <Route exact path="/"><HomePage/></Route>
-                <Route  path="/personInformation"><InstIndex/></Route>
+                <Route path="/ins"><InstIndex/></Route>
+                <Route  path="/stu"><StuIndex/></Route>
             </Switch>
 
     </Router>

@@ -8,8 +8,8 @@ const MyRoute = ()=>{
     return(
         <div className="site-layout-background" style={{ padding: 24, minHeight: 360 }}>
             <Switch>
-                <Route path="/ActivityManagement"><ActivityList/></Route>
-                <Route path="/CourseManagement"><CourseList/></Route>
+                <Route path="/ins/ActivityManagement"><ActivityList/></Route>
+                <Route path="/ins/CourseManagement"><CourseList/></Route>
             </Switch>
 
 
