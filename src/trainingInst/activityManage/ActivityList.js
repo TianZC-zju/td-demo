@@ -5,6 +5,8 @@ import '../courseManage/CourseList.css'
 import SuperIcon from "../../public/iconfront"
 
 const fakeDataUrl2 = `https://www.fastmock.site/mock/76531f6c539f5dbd8b4fa43216bb135a/student/customer/activityManage`;
+const dataUrl = `http://lyxkaka.e1.luyouxia.net:33880/trainingInst/course`
+
 
 const ActivityList = (props)=>{
     const [activityList, setActivityList] = useState([])
@@ -16,6 +18,22 @@ const ActivityList = (props)=>{
         }).then(res=>{
             setActivityList(res.data.data.activityList)
         })
+        // axios.post(dataUrl,{
+        //     "name":"王田",
+        //     "number":45,
+        //     "description":"深入技术基础",
+        //     "passScore":67,
+        //     "startTime":"2020-01-02",
+        //     "endTime":"2020-01-03",
+        //     "teachers":[
+        //         {"id":2
+        //         }
+        //     ]
+        // }).then((res=>{
+        //     console.log(res)
+        // }))
+
+
     }, [])
     return(
         <List

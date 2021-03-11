@@ -1,0 +1,54 @@
+*{margin: 0;padding: 0;box-sizing: border-box}
+Image{width: 100%;}
+
+.activity{
+    width: 800px;
+    background-color: white;
+    margin-left: auto;
+    margin-right: auto;
+}
+.activity .activityTitle{
+    border: 2px solid black;
+    margin: 1px;
+}
+
+.activityTitle .firstContent{
+    display: flex;
+}
+.firstContent .logo{
+    margin: 10px;
+}
+
+.firstContent .timeAndNumber{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    margin: 10px;
+}
+.timeAndNumber .someIntroduce{
+    background-color: #CCCCCC;
+    margin-top: -40px;
+    padding: 5px;
+    border: 2px solid black;
+}
+.activityContent{
+    border: 2px solid black;
+}
+.activityContent > *{
+    margin: 20px 10px;
+}
+.activityContent .content{
+    border: 2px solid black;
+    background-color: #CCCCCC;
+    padding: 3px;
+}
+.outline > .content{
+    background-color: white;
+
+}
+.insIntroduce .content{
+    display: flex;
+}
+.insIntroduce .introduction {
+    margin-left: 10px;
+}

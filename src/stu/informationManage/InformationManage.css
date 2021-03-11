@@ -1,0 +1,11 @@
+.information{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.information > div{
+    margin-top: 20px;
+}
+.information > Button{
+    margin-top: 20px;
+}

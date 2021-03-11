@@ -5,6 +5,7 @@ import InstIndex from './trainingInst/index'
 import StuIndex from "./stu/index"
 import Header from "./public/Header"
 import HomePage from "./stu/activityManage/HomePage"
+import ActivityDetail from "./public/ActivityDetail"
 import {
     BrowserRouter as Router,
     Switch,
@@ -18,6 +19,8 @@ const App = () => (
                 <Route exact path="/"><HomePage/></Route>
                 <Route path="/ins"><InstIndex/></Route>
                 <Route  path="/stu"><StuIndex/></Route>
+                <Route  path="/ActivityDetail"><ActivityDetail/></Route>
+
             </Switch>
 
     </Router>

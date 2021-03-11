@@ -3,6 +3,7 @@ import React, {useEffect, useState} from 'react'
 import axios from 'axios';
 import './ActivityList.css'
 import SuperIcon from "../../public/iconfront"
+import {Link} from "react-router-dom"
 
 const fakeDataUrl2 = `https://www.fastmock.site/mock/76531f6c539f5dbd8b4fa43216bb135a/student/customer/activityManage`;
 const dataUrl = `http://3n7998852l.wicp.vip/customer/activityManage`
@@ -38,7 +39,7 @@ const ActivityList = (props)=>{
             style={{backgroundColor:"white"}}
             renderItem={item => (
                 <List.Item
-                    actions={[<a key="list-loadmore-edit">查看详情</a>]}
+                    actions={[<Link to={{pathname:"/ActivityDetail",state:{id:3} }}>查看详情</Link>]}
                     style={{
                         backgroundColor:"white",
                     }}
