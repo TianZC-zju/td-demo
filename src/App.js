@@ -7,6 +7,7 @@ import Header from "./public/Header"
 import HomePage from "./stu/activityManage/HomePage"
 import ActivityDetail from "./public/ActivityDetail"
 import CAIndex from "./CA/index"
+import PlatformIndex from "./platform/index"
 import {
     BrowserRouter as Router,
     Switch,
@@ -22,7 +23,7 @@ const App = () => (
                 <Route  path="/stu"><StuIndex/></Route>
                 <Route  path="/ActivityDetail"><ActivityDetail/></Route>
                 <Route  path="/CA"><CAIndex/></Route>
-
+                <Route  path="/platform"><PlatformIndex/></Route>
             </Switch>
 
     </Router>

@@ -1,0 +1,14 @@
+.NewActivity{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.NewActivity > div{
+    margin-top: 20px;
+}
+.NewActivity > Button{
+    margin-top: 20px;
+}
+.NewActivity > .logo{
+    margin-left: -110px;
+}
