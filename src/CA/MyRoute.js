@@ -1,7 +1,7 @@
 import {Route, Switch} from "react-router-dom"
 import React from "react"
 import ActivityList from "./activity/ActivityList"
-import CertificateList from "../stu/certificate/CertificateList"
+import CertificateList from "./certificate/CertificateList"
 const MyRoute = ()=>{
 
     return(
