@@ -20,7 +20,7 @@ const InformationManage = ()=>{
     }
     return(
         <div className="information">
-            <Image src={Information[logo]}></Image>
+            <Image src={Information[logo]}/>
 
             <div className="name">
                 <label >姓名: </label>
@@ -28,7 +28,7 @@ const InformationManage = ()=>{
                     style={{width:"200px"}}
                     defaultValue={Information[name]}
                     onChange={(e)=>changeInput(e,name)}
-                ></Input>
+                />
             </div>
             <div className="phoneNumber">
                 <label >手机: </label>
@@ -36,7 +36,7 @@ const InformationManage = ()=>{
                     style={{width:"200px"}}
                     defaultValue={Information[phoneNumber]}
                     onChange={(e)=>changeInput(e,phoneNumber)}
-                ></Input>
+                />
             </div>
             <div className="wechat">
                 <label >微信: </label>
@@ -44,7 +44,7 @@ const InformationManage = ()=>{
                     style={{width:"200px"}}
                     defaultValue={Information[wechat]}
                     onChange={(e)=>changeInput(e,wechat)}
-                ></Input>
+                />
             </div>
             <div className="birthday">
                 <label >生日: </label>
@@ -52,7 +52,7 @@ const InformationManage = ()=>{
                     style={{width:"200px"}}
                     defaultValue={Information[birthday]}
                     onChange={(e)=>changeInput(e,birthday)}
-                ></Input>
+                />
             </div>
             <div className="introduction">
                 <label >简介: </label>
@@ -60,7 +60,7 @@ const InformationManage = ()=>{
                     style={{width:"200px"}}
                     defaultValue={Information[introduction]}
                     onChange={(e)=>changeInput(e,introduction)}
-                ></Input>
+                />
             </div>
             <Button type="primary">确定</Button>
         </div>

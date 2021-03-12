@@ -3,7 +3,7 @@ export default [
         key:1,
         iconType:"icon-caidaniconwodehui",
         itemName:"创建活动",
-        linkTo:"/ins/newActivity"
+        linkTo:"/ins/NewActivity"
     },
     {
         key:2,
@@ -15,7 +15,7 @@ export default [
         key:3,
         iconType:"icon-zhengshu",
         itemName:"创建课程",
-        linkTo:"/ins/newCourse"
+        linkTo:"/ins/NewCourse"
     },
     {
         key:4,
@@ -27,12 +27,12 @@ export default [
         key:5,
         iconType:"icon-huodong",
         itemName:"学员管理",
-        linkTo:"/ins/studentManage"
+        linkTo:"/ins/StudentManage"
     },
     {
         key:6,
         iconType:"icon-zhengshu",
         itemName:"机构信息维护",
-        linkTo:"/ins/insInformationManage"
+        linkTo:"/ins/InformationManage"
     },
 ]

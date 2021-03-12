@@ -6,6 +6,7 @@ import StuIndex from "./stu/index"
 import Header from "./public/Header"
 import HomePage from "./stu/activityManage/HomePage"
 import ActivityDetail from "./public/ActivityDetail"
+import CAIndex from "./CA/index"
 import {
     BrowserRouter as Router,
     Switch,
@@ -20,6 +21,7 @@ const App = () => (
                 <Route path="/ins"><InstIndex/></Route>
                 <Route  path="/stu"><StuIndex/></Route>
                 <Route  path="/ActivityDetail"><ActivityDetail/></Route>
+                <Route  path="/CA"><CAIndex/></Route>
 
             </Switch>
 
