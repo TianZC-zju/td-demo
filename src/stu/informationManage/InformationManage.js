@@ -2,6 +2,12 @@ import NameIndex from "./NameIndex"
 import {Input,Image, Button} from "antd"
 import {useState} from "react"
 import "./InformationManage.css"
+import moment from 'moment';
+import { DatePicker, Space } from 'antd';
+const { RangePicker } = DatePicker;
+
+
+const dateFormat = 'YYYY/MM/DD';
 
 
 const InformationManage = ()=>{
@@ -17,6 +23,12 @@ const InformationManage = ()=>{
     const [Information, setInformation]=useState(dataInit)
     const changeInput =(e,key)=>{
         setInformation(state=>({...state,[key]:e.target.defaultValue}))
+    }
+    const submitInf =()=>{
+        console.log(Information)
+    }
+    const changeDate=(e, key)=>{
+        e&&setInformation(state=>({...state,[key]:e.format(dateFormat)}))
     }
     return(
         <div className="information">
@@ -48,11 +60,13 @@ const InformationManage = ()=>{
             </div>
             <div className="birthday">
                 <label >生日: </label>
-                <Input
+                <DatePicker
+                    defaultValue={moment('2015/01/01', dateFormat)}
+                    format={dateFormat}
                     style={{width:"200px"}}
-                    defaultValue={Information[birthday]}
-                    onChange={(e)=>changeInput(e,birthday)}
+                    onChange={e=>changeDate(e,birthday)}
                 />
+
             </div>
             <div className="introduction">
                 <label >简介: </label>
@@ -62,7 +76,7 @@ const InformationManage = ()=>{
                     onChange={(e)=>changeInput(e,introduction)}
                 />
             </div>
-            <Button type="primary">确定</Button>
+            <Button type="primary" onClick={()=>submitInf()}>确定</Button>
         </div>
     )
 }

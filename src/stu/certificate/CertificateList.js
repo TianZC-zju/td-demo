@@ -57,13 +57,15 @@ const CertificateList =()=>{
             description:"深入技术基础, 紧跟科学前沿"
         },
     ])
-
+    const gotoDetail =()=>{
+        console.log("haha")
+    }
     return(
         <div className="Homepage">
             <div className="courseCards">
                 <div className="zjc">
                     {courseList.map(it =>
-                        <div className="card">
+                        <div className="card" onClick={()=>gotoDetail()}>
                             <Image
                                 src={it.picSrc}></Image>
                             <div className="content">

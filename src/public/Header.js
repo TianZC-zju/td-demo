@@ -3,24 +3,29 @@ import "./Header.css"
 import {Menu} from 'antd'
 import SuperIcon from './iconfront'
 import {
-    Link
-} from "react-router-dom";
+    Link, useHistory
+} from "react-router-dom"
 const Header=()=>{
-
+    let history = useHistory()
+    const gotoPage=(e)=>{
+        if(e.key === "1"){
+            history.push({pathname:"/HomePage"})
+        }
+    }
     return(
         <div id="header">
             <div className="logo">区块链培训平台</div>
             <div className="listAll">
-                <Menu mode="horizontal" theme="dark">
-                    <Menu.Item style={{fontSize:"1.1rem"}}>
+                <Menu mode="horizontal" theme="dark" onClick={(e)=>gotoPage(e)}>
+                    <Menu.Item style={{fontSize:"1.1rem"}} key={1} >
                         <SuperIcon type="icon-shouye" />
-                        <Link to="/">首页</Link>
+                        首页
                     </Menu.Item>
-                    <Menu.Item style={{fontSize:"1.1rem"}}>
+                    <Menu.Item style={{fontSize:"1.1rem"}} key={2}>
                         <SuperIcon type="icon-about" />
                         关于
                     </Menu.Item>
-                    <Menu.Item style={{fontSize:"1.1rem"}}>
+                    <Menu.Item style={{fontSize:"1.1rem"}} key={3}>
                         <SuperIcon type="icon-qita" />
                         其他
                     </Menu.Item>

@@ -1,5 +1,5 @@
 import React from 'react'
-
+import Header from "../public/Header"
 import {BrowserRouter as Router} from "react-router-dom"
 import { Layout} from "antd"
 import MySiderMenu from "./MyMenu"
@@ -10,6 +10,7 @@ const {  Content, Footer } = Layout;
 const Index = ()=>{
     return (
         <Router>
+            <Header/>
             <Layout style={{ minHeight: '100vh' }}>
                 <MySiderMenu/>
                 <Layout className="site-layout">
