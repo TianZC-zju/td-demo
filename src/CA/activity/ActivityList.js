@@ -1,14 +1,15 @@
 import { List, Skeleton } from 'antd';
 import React, {useEffect, useState} from 'react'
-// import axios from 'axios';
+import axios from 'axios';
 import SuperIcon from "../../public/iconfront"
 import NameIndex from "./NameIndex"
-
+import Api from "../../config/apiUrl"
 // const fakeDataUrl2 = `https://www.fastmock.site/mock/76531f6c539f5dbd8b4fa43216bb135a/student/customer/activityManage`;
 // const dataUrl = `http://lyxkaka.e1.luyouxia.net:33880/trainingInst/course`
 
 
 const ActivityList = (props)=>{
+    const {CaApi} = Api
     const {activityName, insName,auditState} = NameIndex
     const dataInit=[{
         [activityName]:"火箭制造",
@@ -28,15 +29,20 @@ const ActivityList = (props)=>{
 
     ]
     const [activityList, setActivityList] = useState(dataInit)
-    // useEffect(()=>{
-    //     axios({method: "post",
-    //         url:fakeDataUrl2,
-    //         data:{filter:0},
-    //         withCredentials: true
-    //     }).then(res=>{
-    //         setStudentList(res.data.data.studentList)
-    //     })
-    // }, [])
+    useEffect(()=>{
+
+        axios({method: "post",
+            url:CaApi.postAllActivity,
+            data:{"phone":"12345678999",
+                "page":1,
+                "num":2,
+                "filter":-1
+            },
+            withCredentials: true
+        }).then(res=>{
+            console.log(res)
+        })
+    }, [])
     return(
         <List
             className="demo-loadmore-list"

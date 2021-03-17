@@ -9,12 +9,12 @@ const MyRoute = ()=>{
     return(
         <div className="site-layout-background" style={{ padding: 24, minHeight: 360 }}>
             <Switch>
-                <Route path="/stu/ActivityManagement"><ActivityList/></Route>
-                <Route path="/stu/informationManage"><InformationManage/></Route>
+
+                <Route path="/stu/ActivityManagement/"><ActivityList/></Route>
+                <Route path="/stu/informationManage/"><InformationManage/></Route>
                 <Route path="/stu/certificate"><CertificateList/></Route>
+                <Route path="/stu/:userId"><InformationManage/></Route>
             </Switch>
-
-
         </div>
     )
 }

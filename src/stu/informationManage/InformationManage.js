@@ -3,7 +3,7 @@ import {Input,Image, Button} from "antd"
 import {useState} from "react"
 import "./InformationManage.css"
 import moment from 'moment';
-import { DatePicker, Space } from 'antd';
+import { DatePicker, Space, message } from 'antd';
 const { RangePicker } = DatePicker;
 
 
@@ -25,7 +25,22 @@ const InformationManage = ()=>{
         setInformation(state=>({...state,[key]:e.target.defaultValue}))
     }
     const submitInf =()=>{
+        const nameToMassage={
+            [logo]:"logo",
+            [phoneNumber]:"手机号码",
+            [name]:"姓名",
+            [wechat]:"微信号",
+            [birthday]:"生日",
+            [introduction]:"个人简介"
+        }
+        for(let key in Information){
+            if(Information[key] === ''){
+                message.error(`${nameToMassage[key]} 不能为空!`)
+                return
+            }
+        }
         console.log(Information)
+        message.success("修改成功")
     }
     const changeDate=(e, key)=>{
         e&&setInformation(state=>({...state,[key]:e.format(dateFormat)}))

@@ -10,6 +10,7 @@ const Header=()=>{
     const gotoPage=(e)=>{
         if(e.key === "1"){
             history.push({pathname:"/HomePage"})
+            history.go(0)
         }
     }
     return(

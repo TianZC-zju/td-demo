@@ -1,6 +1,8 @@
 import React, {useState} from 'react'
 import "./HomePage.css"
 import { Carousel,Image,Card  } from 'antd';
+import Header from "../../public/Header"
+import {useHistory} from "react-router-dom"
 
 
 const HomePage =()=>{
@@ -65,44 +67,51 @@ const HomePage =()=>{
             id:"4",
         },
     ])
+    const history = useHistory()
     const gotoDetail =(id)=>{
-        console.log(id)
+        history.push({
+            pathname:'/ActivityDetail/1/-1',
+        })
     }
     return(
-        <div className="Homepage">
-            <Carousel afterChange={onChange} autoplay>
-                <div className="myimg" >
-                    <Image width={800} src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/34ee51eec2c04012ba73cb14669e7b2e~tplv-k3u1fbpfcp-watermark.image"/>
-                </div>
-                <div className="myimg">
-                    <Image width={800}  src="https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/71799ed33644414b89ed2adae096422d~tplv-k3u1fbpfcp-watermark.image"/>
-                </div>
-                <div className="myimg">
-                    <Image  width={800} src="https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/3b0c169aeaf046b68cffa71fe6671266~tplv-k3u1fbpfcp-watermark.image"/>
-                </div>
-                <div className="myimg">
-                    <Image width={800}  src="https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/b57f505e4b9e4ed59a266f614dc1f2b5~tplv-k3u1fbpfcp-watermark.image"/>
-                </div>
-            </Carousel>
-            <div className="courseCards">
-                <div className="zjc">
-                    {courseList.map(it =>
-                        <div className="card" onClick={()=>gotoDetail(it.id)}>
-                            <Image
-                                src={it.picSrc}/>
-                            <div className="content">
-                                <div className="activityName">{it.name}</div>
-                                <div className="insName">{it.insName}</div>
-                                <div className="description">{it.description}</div>
-                            </div>
-                        </div>)}
+        <>
+            <Header/>
+            <div className="Homepage">
+                <Carousel afterChange={onChange} autoplay>
+                    <div className="myimg" >
+                        <Image width={800} src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/34ee51eec2c04012ba73cb14669e7b2e~tplv-k3u1fbpfcp-watermark.image"/>
+                    </div>
+                    <div className="myimg">
+                        <Image width={800}  src="https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/71799ed33644414b89ed2adae096422d~tplv-k3u1fbpfcp-watermark.image"/>
+                    </div>
+                    <div className="myimg">
+                        <Image  width={800} src="https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/3b0c169aeaf046b68cffa71fe6671266~tplv-k3u1fbpfcp-watermark.image"/>
+                    </div>
+                    <div className="myimg">
+                        <Image width={800}  src="https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/b57f505e4b9e4ed59a266f614dc1f2b5~tplv-k3u1fbpfcp-watermark.image"/>
+                    </div>
+                </Carousel>
+                <div className="courseCards">
+                    <div className="zjc">
+                        {courseList.map(it =>
+                            <div className="card" onClick={()=>gotoDetail(it.id)}>
+                                <Image
+                                    src={it.picSrc}/>
+                                <div className="content">
+                                    <div className="activityName">{it.name}</div>
+                                    <div className="insName">{it.insName}</div>
+                                    <div className="description">{it.description}</div>
+                                </div>
+                            </div>)}
 
+
+                    </div>
 
                 </div>
 
             </div>
+        </>
 
-        </div>
     )
 }
 

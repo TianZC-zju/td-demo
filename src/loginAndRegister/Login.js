@@ -4,6 +4,7 @@ import {Card, Input, Button, Spin, message, Row, Col} from 'antd'
 import {UserAddOutlined, KeyOutlined, PropertySafetyFilled } from '@ant-design/icons'
 import './Login.css'
 import axios from 'axios'
+import API from "../config/apiUrl"
 import { useHistory } from "react-router-dom";
 
 function Login(props){
@@ -27,31 +28,21 @@ function Login(props){
             return false
         }
         let dataProps = {
-            'userName': username,
-            'pwd':password
+            'username': username,
+            'password':password
         }
         axios({
             method:'post',
-            url:zyPost,
+            url:API.fakeLogin.postLogin,
             data:dataProps,
             withCredentials:true //查看资料才知道跨域请求要想带上cookie，必须要在ajax请求里加上xhrFields: {withCredentials: true
         }).then(
             res=>{
-                console.log(res.data)
                 setIsLoading(false)
-                if(res.data.data == '登陆成功'){
+                const userInfo = res.data.data.userInfo
+                if(userInfo !== null ){
                     localStorage.setItem('openId', res.data.openId)
-
-                    if(res.data.typeid == '1'){
-                        props.history.push({ pathname: '/Gys', state: { adminId: res.data.adminId} })
-                    }
-                    if(res.data.typeid == '2'){
-                        props.history.push({ pathname: '/hxqy', state: { adminId: res.data.adminId} })
-                    }
-                    if(res.data.typeid == '3'){
-                        props.history.push({ pathname: '/yh', state: { adminId: res.data.adminId} })
-                    }
-
+                    history.push({ pathname: `/${userInfo.type}/${userInfo.userId}`})
                 }else{
                     //console.log()
                     message.error('用户名密码错误')

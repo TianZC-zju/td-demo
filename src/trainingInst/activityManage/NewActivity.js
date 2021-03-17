@@ -2,6 +2,7 @@ import NameIndex from "./NameIndex"
 import {useState} from "react"
 import {Button, Image, Input} from "antd"
 import "./NewActivity.css"
+import UploadLogo from "../../public/UploadLogo"
 
 const NewActivity=()=>{
     const {logo,name, introduction,detail} =NameIndex
@@ -45,8 +46,7 @@ const NewActivity=()=>{
                 />
             </div>
              <div className="logo">
-                <label >活动海报: </label>
-                <Button type="primary">点击上传</Button>
+                <UploadLogo/>
             </div>
 
 

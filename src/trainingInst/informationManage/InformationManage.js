@@ -1,8 +1,8 @@
 import NameIndex from "./NameIndex"
-import {Input,Image, Button} from "antd"
+import {Input, Button } from "antd"
 import {useState} from "react"
 import "./InformationManage.css"
-
+import UploadLogo from "../../public/UploadLogo"
 
 const InformationManage = ()=>{
     const {logo, name, introduction} =NameIndex
@@ -12,12 +12,29 @@ const InformationManage = ()=>{
         [introduction]:"专业的培训机构"
     }
     const [Information, setInformation]=useState(dataInit)
+
+    const dataInit2={
+        previewVisible: false,
+        previewImage: '',
+        previewTitle: '',
+        fileList: [{
+            uid: '-1',
+            name: 'image.png',
+            status: 'done',
+            url: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
+        },]
+    }
+
+
     const changeInput =(e,key)=>{
         setInformation(state=>({...state,[key]:e.target.defaultValue}))
     }
     return(
         <div className="information">
-            <Image src={Information[logo]}/>
+            <div className="logo">
+                <UploadLogo/>
+
+            </div>
 
             <div className="name">
                 <label >姓名: </label>
@@ -35,10 +52,7 @@ const InformationManage = ()=>{
                     onChange={(e)=>changeInput(e,introduction)}
                 />
             </div>
-            <div className="logo">
-                <label >logo: </label>
-                <Button>点击上传</Button>
-            </div>
+
             <Button type="primary">确定</Button>
         </div>
     )

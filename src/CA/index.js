@@ -5,11 +5,13 @@ import { Layout} from "antd"
 import MySiderMenu from "./MyMenu"
 import MyBreadcrumb from "./MyBreadcrumb"
 import MyRoute from "./MyRoute"
+import Header from "../public/Header"
 const {  Content, Footer } = Layout;
 
 const Index = ()=>{
     return (
         <Router>
+            <Header/>
             <Layout style={{ minHeight: '100vh' }}>
                 <MySiderMenu/>
                 <Layout className="site-layout">

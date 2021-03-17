@@ -3,20 +3,27 @@ import React, {useEffect, useState} from 'react'
 import axios from 'axios';
 import '../courseManage/CourseList.css'
 import SuperIcon from "../../public/iconfront"
+import API from "../../config/apiUrl"
 
 const fakeDataUrl2 = `https://www.fastmock.site/mock/76531f6c539f5dbd8b4fa43216bb135a/student/customer/activityManage`;
 const dataUrl = `http://lyxkaka.e1.luyouxia.net:33880/trainingInst/course`
 
 
 const ActivityList = (props)=>{
+    const {insApi} =API
     const [activityList, setActivityList] = useState([])
     useEffect(()=>{
         axios({method: "post",
-            url:fakeDataUrl2,
-            data:{filter:0},
+            url:insApi.getAllActivity,
+            data:{
+                "id":1,
+                "page":1,
+                "num":1
+            },
             withCredentials: true
         }).then(res=>{
-            setActivityList(res.data.data.activityList)
+            console.log(res)
+            // setActivityList(res.data.data.activityList)
         })
         // axios.post(dataUrl,{
         //     "name":"王田",
