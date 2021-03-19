@@ -1,6 +1,6 @@
 import NameIndex from "./NameIndex"
 import {useState} from "react"
-import {Button, Image, Input} from "antd"
+import {Button, Image, Input, message} from "antd"
 import "./NewActivity.css"
 import UploadLogo from "../../public/UploadLogo"
 
@@ -15,6 +15,22 @@ const NewActivity=()=>{
     const [Information, setInformation]=useState(dataInit)
     const changeInput =(e,key)=>{
         setInformation(state=>({...state,[key]:e.target.defaultValue}))
+    }
+    const submitInf =()=>{
+        const nameToMassage={
+            [name]:"活动名称",
+            [introduction]:"活动简介",
+            [logo]:"logo",
+            [detail]:"活动详情",
+        }
+        for(let key in Information){
+            if(Information[key] === ''){
+                message.error(`${nameToMassage[key]} 不能为空!`)
+                return
+            }
+        }
+        console.log(Information)
+        message.success("修改成功")
     }
     return(
         <div className="NewActivity">
@@ -50,7 +66,7 @@ const NewActivity=()=>{
             </div>
 
 
-            <Button type="primary">确定</Button>
+            <Button type="primary"  onClick={()=>submitInf()}>确定</Button>
         </div>
     )
 }

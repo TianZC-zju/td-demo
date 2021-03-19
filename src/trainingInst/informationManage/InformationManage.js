@@ -1,5 +1,5 @@
 import NameIndex from "./NameIndex"
-import {Input, Button } from "antd"
+import {Input, Button, message} from "antd"
 import {useState} from "react"
 import "./InformationManage.css"
 import UploadLogo from "../../public/UploadLogo"
@@ -29,6 +29,19 @@ const InformationManage = ()=>{
     const changeInput =(e,key)=>{
         setInformation(state=>({...state,[key]:e.target.defaultValue}))
     }
+    const submitInf =()=>{
+        const nameToMassage={
+            [name]:"活动名称",
+            [introduction]:"活动简介",
+        }
+        for(let key in Information){
+            if(Information[key] === ''){
+                message.error(`${nameToMassage[key]} 不能为空!`)
+                return
+            }
+        }
+        message.success("修改成功")
+    }
     return(
         <div className="information">
             <div className="logo">
@@ -53,7 +66,7 @@ const InformationManage = ()=>{
                 />
             </div>
 
-            <Button type="primary">确定</Button>
+            <Button type="primary" onClick={()=>submitInf()}>确定</Button>
         </div>
     )
 }

@@ -17,6 +17,9 @@ function Login(props){
     let zyPost = `http://lyxkaka.e1.luyouxia.net:29133/login`
     let zjxPost = `http://zjxzjx.e1.luyouxia.net:29144/sys/login?userName=zs&pwd=123`
     const checkLogin=()=>{
+        axios.get("http://192.168.0.111:8080/user/proof/download").then(res=>{
+            console.log(res)
+        })
         setIsLoading(true)
         if(!username){
             message.error("用户名不能为空")

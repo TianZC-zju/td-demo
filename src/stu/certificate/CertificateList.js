@@ -1,7 +1,7 @@
 import React, {useState} from 'react'
 import "./CertificateList.css"
 import { Carousel,Image,Card  } from 'antd';
-
+import {useHistory} from "react-router"
 
 const CertificateList =()=>{
     function onChange(a, b, c) {
@@ -57,8 +57,9 @@ const CertificateList =()=>{
             description:"深入技术基础, 紧跟科学前沿"
         },
     ])
+    const history =useHistory()
     const gotoDetail =()=>{
-        console.log("haha")
+        history.push("/stu/certificate/detail")
     }
     return(
         <div className="Homepage">
@@ -67,7 +68,7 @@ const CertificateList =()=>{
                     {courseList.map(it =>
                         <div className="card" onClick={()=>gotoDetail()}>
                             <Image
-                                src={it.picSrc}></Image>
+                                src={it.picSrc}>图片</Image>
                             <div className="content">
                                 <div className="activityName">{it.name}</div>
                                 <div className="insName">{it.insName}</div>

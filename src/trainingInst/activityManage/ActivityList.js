@@ -4,6 +4,7 @@ import axios from 'axios';
 import '../courseManage/CourseList.css'
 import SuperIcon from "../../public/iconfront"
 import API from "../../config/apiUrl"
+import {useHistory} from "react-router"
 
 const fakeDataUrl2 = `https://www.fastmock.site/mock/76531f6c539f5dbd8b4fa43216bb135a/student/customer/activityManage`;
 const dataUrl = `http://lyxkaka.e1.luyouxia.net:33880/trainingInst/course`
@@ -11,10 +12,11 @@ const dataUrl = `http://lyxkaka.e1.luyouxia.net:33880/trainingInst/course`
 
 const ActivityList = (props)=>{
     const {insApi} =API
+    const history = useHistory()
     const [activityList, setActivityList] = useState([])
     useEffect(()=>{
         axios({method: "post",
-            url:insApi.getAllActivity,
+            url:fakeDataUrl2,
             data:{
                 "id":1,
                 "page":1,
@@ -22,8 +24,8 @@ const ActivityList = (props)=>{
             },
             withCredentials: true
         }).then(res=>{
-            console.log(res)
-            // setActivityList(res.data.data.activityList)
+            // console.log(res)
+            setActivityList(res.data.data.activityList)
         })
         // axios.post(dataUrl,{
         //     "name":"王田",
@@ -42,6 +44,12 @@ const ActivityList = (props)=>{
 
 
     }, [])
+    const gotoDetail =(id)=>{
+        history.push({
+            pathname:'/ActivityDetail/1/-1',
+        })
+        history.go(0)
+    }
     return(
         <List
             className="demo-loadmore-list"
@@ -54,7 +62,7 @@ const ActivityList = (props)=>{
             style={{backgroundColor:"white"}}
             renderItem={item => (
                 <List.Item
-                    actions={[<a key="list-loadmore-edit">查看详情</a>]}
+                    actions={[<a key="list-loadmore-edit" onClick={()=>gotoDetail(item.id)}>查看详情</a>]}
                     style={{
                         backgroundColor:"white",
                     }}

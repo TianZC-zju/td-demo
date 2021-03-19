@@ -1,6 +1,6 @@
-const logo = "logo"
-const phoneNumber = "phoneNumber"
-const wechat = "wechat"
+const logo = "avatar"
+const phoneNumber = "phone"
+const gender = "gender"
 const birthday = "birthday"
 const introduction = "introduction"
 const name = "name"
@@ -8,7 +8,7 @@ const name = "name"
 export default  {
     logo,
     phoneNumber,
-    wechat,
+    gender,
     birthday,
     introduction,
     name,

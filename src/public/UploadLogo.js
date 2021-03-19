@@ -11,11 +11,14 @@ const UploadLogo =()=>{
         if (!file.url && !file.preview) {
             file.preview = await getBase64(file.originFileObj);
         }
+        console.log("url")
+        console.log(file.url)
         setpreviewVisible(true)
         setpreviewImage(file.url || file.preview)
         setpreviewTitle(file.name || file.url.substring(file.url.lastIndexOf('/') + 1))
     };
-    const handleChange = ({ fileList }) => {
+    const handleChange = (e) => {
+        const {fileList} = e
         setfileList(fileList)
     };
 

@@ -1,6 +1,6 @@
 import NameIndex from "./NameIndex"
 import {useState} from "react"
-import {Button, Image, Input} from "antd"
+import {Button, Image, Input, message} from "antd"
 import "./NewCourse.css"
 
 const NewCourse=()=>{
@@ -18,6 +18,19 @@ const NewCourse=()=>{
     const [Information, setInformation]=useState(dataInit)
     const changeInput =(e,key)=>{
         setInformation(state=>({...state,[key]:e.target.defaultValue}))
+    }
+    const submitInf =()=>{
+        const nameToMassage={
+            [name]:"活动名称",
+            [introduction]:"活动简介",
+        }
+        for(let key in Information){
+            if(Information[key] === ''){
+                message.error(`${nameToMassage[key]} 不能为空!`)
+                return
+            }
+        }
+        message.success("修改成功")
     }
     return(
         <div className="NewActivity">
@@ -91,7 +104,7 @@ const NewCourse=()=>{
 
 
 
-            <Button type="primary">确定</Button>
+            <Button type="primary" onClick={()=>submitInf()}>确定</Button>
         </div>
     )
 }

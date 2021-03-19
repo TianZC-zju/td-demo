@@ -15,26 +15,21 @@ const ActivityList = (props)=>{
     const urlProps = useParams()
     let userId = null
     const [activityList, setActivityList] = useState([])
+
     useEffect(()=>{
-        // userId  = urlProps.userId
 
         const config ={
             headers:{token:`eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJwaG9uZSI6IjEzMTMxMzEzMTMxIiwiZXhwIjoxNjE2NDE2MDc5fQ.nxab8KNQ5AQfEAXbJzQE1HiTsXAaeXT4Dj7NGkaWUHs`}
         }
-        axios.post(API.stuApi.fakepostAllActivity,{
-            "activityId":2,
-                "page":1,
-                "num":5,
-                "filter":0
-        },config).then(res =>{
-            // console.log(res)
-            setActivityList(res.data.data.activityList)
+        axios.get(API.stuApi.getAllActivityByStuId+"1",config).then(res =>{
+            console.log(res)
+            setActivityList(res.data.activityList)
         })
     }, [])
 
-    const gotoDetail =(id)=>{
+    const gotoDetail =(activityId, stuId)=>{
         history.push({
-            pathname:'/ActivityDetail/1/1',
+            pathname:`/ActivityDetail/${activityId}/${stuId}`,
         })
         history.go(0)
     }
@@ -50,7 +45,7 @@ const ActivityList = (props)=>{
             style={{backgroundColor:"white"}}
             renderItem={item => (
                 <List.Item
-                    actions={[<a onClick={()=>gotoDetail(item.id)}>查看详情</a>]}
+                    actions={[<a onClick={()=>gotoDetail(item.id, 1)}>查看详情</a>]}
                     style={{
                         backgroundColor:"white",
                     }}
@@ -62,11 +57,11 @@ const ActivityList = (props)=>{
                                     <SuperIcon className="hj" type="icon-huojian" />
                                 }
                                 title={item.topic}
-                                description={item.studentCourseList.map((it)=>`${it.courseName}: ${it.score} `)}
+                                description={item.courses.map((it)=>`${it.name}: ${it.pass_score}分   `)}
 
                             />
-                        <div className="Time" >{item.startTime +`-`+item.endTime}</div>
-                        <div className="certificateState">{item.certificateState?"已获得证书":"未获得证书"}</div>
+                        <div className="Time" >{item.start_time.toString().split("T")[0] +` - `+item.end_time.toString().split("T")[0]}</div>
+                        <div className="certificateState">{item.state?"已获得证书":"未获得证书"}</div>
                     </Skeleton>
                 </List.Item>
             )}

@@ -1,11 +1,11 @@
-import {useLocation, useParams} from "react-router-dom"
+import { useParams} from "react-router-dom"
 import React, {useEffect, useState} from "react"
 import {Breadcrumb,Button} from "antd"
 import axios from "axios"
 import "./ActivityDetail.css"
 import Image from "antd/es/image"
 import CourseList from "./CourseList"
-import stuApi from '../config/apiUrl'
+import API from '../config/apiUrl'
 import Header from "./Header"
 const fakeDataUrl = `https://www.fastmock.site/mock/9142235e76a55a305826abc2ebab29af/trainingInst/customer/activityDetail`
 
@@ -15,26 +15,32 @@ const fakeDataUrl = `https://www.fastmock.site/mock/9142235e76a55a305826abc2ebab
 
 const ActivityDetail=()=>{
     const urlProps = useParams()
-    urlProps&&urlProps.activityId&&localStorage.setItem("activityId",urlProps.activityId.toString())
-    urlProps&&urlProps.userId&&localStorage.setItem("activityId",urlProps.userId.toString())
 
-    const activityId = urlProps.activityId || localStorage.getItem("activityId")
-    const userId = urlProps.userId || localStorage.getItem("userId")
+    const activityId = urlProps.activityId
+    const userId = urlProps.userId
+    const [topic, settopic] = useState("")
     const [activity, setActivity]=useState({})
     const [activityDe, setActivityDe]=useState({})
     const [eduInstitution, setEduInstitution] = useState({})
     const [showappend, setshowappend] = useState(true)
     useEffect(()=>{
-        console.log(userId)
-        console.log(typeof userId)
         if(userId!=="-1" ){
-            console.log("hah")
             setshowappend(false)
         }
         axios.get(fakeDataUrl+"/3").then(res=>{
             setActivity(res.data)
             setActivityDe(res.data.Activity)
             setEduInstitution(res.data.EduInstitution)
+        })
+
+        axios.post(API.stuApi.postActivityByid,{
+            activityId,
+            userId
+        }).then(res=>{
+            settopic(res.data.data[0].topic)
+            // setActivity(res.data)
+            // setActivityDe(res.data.Activity)
+            // setEduInstitution(res.data.EduInstitution)
         })
     },[])
     const appendBtn=()=>(
@@ -60,7 +66,7 @@ const ActivityDetail=()=>{
                             <Image style={{width:"200px"}} src={activityDe.seal}></Image>
                         </div>
                         <div className="timeAndNumber">
-                            <h1 className="activityName">{activity.name}</h1>
+                            <h1 className="activityName">{topic}</h1>
                             <div className="someIntroduce">
                                 <div className="startEndTime">{"开始时间: "+ activityDe.startTime + " - "+ activityDe.endTime}</div>
                                 <div className="attendNumbers">{"已经参加人数: "+activity.numbers}</div>
