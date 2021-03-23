@@ -5,11 +5,11 @@ import MenuList from "./MenuList"
 const MyBreadcrumb=()=>{
     return(
         <Breadcrumb style={{ margin: '16px 0' }}>
-            <Breadcrumb.Item>首页</Breadcrumb.Item>
-            <Breadcrumb.Item>平台管理</Breadcrumb.Item>
+            <Breadcrumb.Item key="1">首页</Breadcrumb.Item>
+            <Breadcrumb.Item key="2">平台管理</Breadcrumb.Item>
             <Switch>
                 {MenuList.map(it=>(
-                    <Route path={it.linkTo}><Breadcrumb.Item>{it.itemName}</Breadcrumb.Item></Route>
+                    <Route path={it.linkTo}><Breadcrumb.Item key={it.key}>{it.itemName}</Breadcrumb.Item></Route>
                 ))}
             </Switch>
         </Breadcrumb>

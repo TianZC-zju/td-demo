@@ -10,9 +10,9 @@ import Context from "./studentMange/MyContext"
 const {  Content, Footer } = Layout;
 
 const Index = ()=>{
-    const params = useParams()
+
     const store ={
-        insId:params.insId
+        insId:localStorage.getItem('openId')
     }
     const reducer = (state, action)=>{
         switch (action.type) {
@@ -33,11 +33,8 @@ const Index = ()=>{
 
                     <Layout className="site-layout">
                         <Content style={{ margin: '0 16px' }}>
-
                                 <MyBreadcrumb />
                                 <MyRoute />
-
-
                         </Content>
                         <Footer style={{ textAlign: 'center' }}>Ant Design ©2018 Created by Ant UED</Footer>
                     </Layout>

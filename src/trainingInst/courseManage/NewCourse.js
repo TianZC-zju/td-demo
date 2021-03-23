@@ -1,84 +1,115 @@
 import NameIndex from "./NameIndex"
-import {useContext, useEffect, useState} from "react"
-import {Button, DatePicker, Input, message, Cascader} from "antd"
+import React, {useContext, useEffect, useReducer} from "react"
+import {Button, DatePicker, Input, message, Cascader, Checkbox, Row, Col, Tag} from "antd"
 import "./NewCourse.css"
 import axios from "axios"
 import API from "../../config/apiUrl"
 import Context from "../studentMange/MyContext"
-
+import Modal from "antd/es/modal";
 
 const { RangePicker } = DatePicker;
-const optionLists = [
-    {
-        value: 'zhejiang',
-        label: 'Zhejiang',
 
-    },
-    {
-        value: 'jiangsu',
-        label: 'Jiangsu',
 
-    },
-];
 const NewCourse=()=>{
+
     const {state, dispatch} = useContext(Context)
-    const [value, setValue] = useState();
-    const [hackValue, setHackValue] = useState();
-    const [dates, setDates] = useState([]);
-    const [activityList, setactivityList] = useState([])
-    const [teacherList, setteacherList] = useState([])
+    const {store, reducer} = NameIndex
+    const [cState, cDispatch] = useReducer(reducer, store)
+
     const disabledDate = current => {
-        if (!dates || dates.length === 0) {
+        if (!cState.dates || cState.dates.length === 0) {
             return false;
         }
-        // const tooLate = dates[0] && current.diff(dates[0], 'days') > 7;
-        // const tooEarly = dates[1] && dates[1].diff(current, 'days') > 7;
         return false;
     };
-    const onChange = (value, selectedOptions) => {
-        console.log(value, selectedOptions);
-    };
+
     const onOpenChange = open => {
         if (open) {
-            setHackValue([]);
-            setDates([]);
+            cDispatch({
+                type:"sethackValue",
+                hackValue:[],
+            })
+            cDispatch({
+                type:"setdates",
+                dates:[],
+            })
         } else {
-            setHackValue(undefined);
+            cDispatch({
+                type:"sethackValue",
+                hackValue:undefined,
+            })
         }
     };
-    const {attendNumber,introduction,name,score,teachers,StartTime,EndTime,ActivityName} =NameIndex
-    const dataInit ={
-        [score]:60,
-        [name]:"语文",
-        [introduction]:"3个月教你快速造火箭.  课程内容涵盖面广，工程实践性强，具有理论和实践紧密结合的特点",
-        [attendNumber]:100,
-        [teachers]:[{id:23,name:"李老师"},{id:33,name:"王老师"}],
-        [StartTime]:"2020-12-1",
-        [EndTime]:"2021-12-1",
-        [ActivityName]:"火箭制造"
-    }
-    const [Information, setInformation]=useState(dataInit)
-    const changeInput =(e,key)=>{
-        setInformation(state=>({...state,[key]:e.target.defaultValue}))
+
+
+    const handleCancel = () => {
+        cDispatch({
+            type:"setisModalVisible",
+            isModalVisible:false,
+        })
+    };
+    const handleOk =()=>{
+        cDispatch({
+            type:"setisModalVisible",
+            isModalVisible:false,
+        })
+        message.success("修改成功")
     }
     const submitInf =()=>{
-        const nameToMassage={
-            [name]:"活动名称",
-            [introduction]:"活动简介",
-        }
-        for(let key in Information){
-            if(Information[key] === ''){
-                message.error(`${nameToMassage[key]} 不能为空!`)
-                return
+        // const nameToMassage={
+        //     [name]:"活动名称",
+        //     [introduction]:"活动简介",
+        // }
+        // for(let key in Information){
+        //     if(Information[key] === ''){
+        //         message.error(`${nameToMassage[key]} 不能为空!`)
+        //         return
+        //     }
+        // }
+        axios.post(API.insApi.newACourse,
+            {
+                courseItem:{
+                    name:cState.name,
+                    number:cState.number,
+                    description:cState.description,
+                    pass_score:cState.pass_score,
+                    start_time:cState.value[0].format("YYYY/MM/DD"),end_time:cState.value[1].format("YYYY/MM/DD"),
+                    edu_institution:state.insId,
+                    activity:cState.selectActivityId,
+                },
+                selectTeacherList:cState.selectTeacherList,
+
+            }).then(res=>{
+            if(res.data.insertSuccess === true){
+                message.success("新增课程成功1!")
+            }else{
+                console.log(res)
+                message.error("新增课程失败2!")
             }
-        }
-        message.success("修改成功")
+        }).catch(
+            res=>{
+                console.log(res)
+                message.error("新增课程失败3!")
+            }
+        )
+    }
+    function onChange2(checkedValues) {
+        cDispatch({
+            type:"setselectTeacherList",
+            selectTeacherList:checkedValues,
+        })
     }
     useEffect(()=>{
         axios.get(API.insApi.getAllTeacherAndActivityByInsId+state.insId)
             .then(res=>{
-                setteacherList(res.data.teacherList)
-                setactivityList(res.data.activityList)
+                cDispatch({
+                    type:"setteacherList",
+                    teacherList:res.data.teacherList,
+                })
+                cDispatch({
+                    type:"setActivityList",
+                    ActivityList:res.data.activityList,
+                })
             })
     },[])
     return(
@@ -88,8 +119,13 @@ const NewCourse=()=>{
                 <label >课程名称: </label>
                 <Input
                     style={{width:"200px"}}
-                    defaultValue={Information[name]}
-                    onChange={(e)=>changeInput(e,name)}
+                    defaultValue={cState.name}
+                    onChange={
+                    (e)=>{
+                        cDispatch({
+                        type:"setname",
+                        name:e.target.value,
+                    })}}
                 />
             </div>
 
@@ -97,8 +133,12 @@ const NewCourse=()=>{
                 <label >课程人数: </label>
                 <Input
                     style={{width:"200px"}}
-                    defaultValue={Information[attendNumber]}
-                    onChange={(e)=>changeInput(e,introduction)}
+                    defaultValue={cState.number}
+                    onChange={(e)=>{
+                            cDispatch({
+                                type:"setnumber",
+                                number:e.target.value,
+                            })}}
                 />
             </div>
 
@@ -106,29 +146,50 @@ const NewCourse=()=>{
                 <label >课程简介: </label>
                 <Input
                     style={{width:"200px"}}
-                    defaultValue={Information[introduction]}
-                    onChange={(e)=>changeInput(e,introduction)}
+                    defaultValue={cState.description}
+                    onChange={(e)=>{
+                        cDispatch({
+                            type:"setdescription",
+                            description:e.target.value,
+                        })}}
                 />
             </div>
             <div className="score">
                 <label >及格分数: </label>
                 <Input
                     style={{width:"200px"}}
-                    defaultValue={Information[score]}
-                    onChange={(e)=>changeInput(e,introduction)}
+                    defaultValue={cState.pass_score}
+                    onChange={(e)=>{
+                        cDispatch({
+                            type:"setpass_score",
+                            pass_score:e.target.value,
+                        })}}
                 />
             </div>
             <div className="teachers">
                 <label >任课老师: </label>
-                <Cascader options={teacherList.map(item=>({value:item.id, label:item.name}))}  onChange={onChange} changeOnSelect style={{width:"200px"}} />
+                {cState.selectTeacherList.map(item=>(<Tag>{item.name}</Tag>))}
+                <Button onClick={()=>{
+                    cDispatch({
+                        type:"setisModalVisible",
+                        isModalVisible:true,
+                    })}}>点击选择</Button>
             </div>
             <div className="StartTime">
                 <label >选择时间: </label>
                 <RangePicker
-                    value={hackValue || value}
+                    value={cState.hackValue || cState.value}
                     disabledDate={disabledDate}
-                    onCalendarChange={val => setDates(val)}
-                    onChange={val => setValue(val)}
+                    onCalendarChange={val => cDispatch({
+                        type:"setdates",
+                        dates:val,
+                    })}
+                    onChange={val => {
+                        cDispatch({
+                            type: "setvalue",
+                            value: val,
+                        })
+                    }}
                     onOpenChange={onOpenChange}
                     style={{width:"200px"}}
                 />
@@ -136,13 +197,23 @@ const NewCourse=()=>{
 
             <div className="activityName">
                 <label >所属活动: </label>
-                <Cascader options={activityList.map(item=>({value:item.id, label:item.topic}))}  onChange={onChange} changeOnSelect style={{width:"200px"}} />
+                <Cascader options={cState.ActivityList.map(item=>({value:item.id, label:item.topic}))}  onChange={(value, selectedOptions)=>cDispatch({type:"setselectActivityId", selectActivityId:value[0]})} changeOnSelect style={{width:"200px"}} />
 
             </div>
 
-
-
             <Button type="primary" onClick={()=>submitInf()}>确定</Button>
+            <Modal title="请选择授课老师:" visible={cState.isModalVisible} onOk={handleOk} onCancel={handleCancel}>
+                <Checkbox.Group style={{ width: '100%' }} onChange={onChange2}>
+                    <Row>
+                        {cState.teacherList.map((item, index)=>(
+                            <Col span={8}>
+                                <Checkbox value={item} key={item.id}>{item.name}</Checkbox>
+                            </Col>
+                        ))}
+                    </Row>
+                </Checkbox.Group>
+
+            </Modal>
         </div>
     )
 }

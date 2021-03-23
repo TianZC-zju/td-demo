@@ -1,16 +1,17 @@
 import {Breadcrumb} from "antd"
 import {Route, Switch} from "react-router-dom"
 import React from "react"
+import MenuList from "./MenuList";
 
 const MyBreadcrumb=()=>{
     return(
         <Breadcrumb style={{ margin: '16px 0' }}>
-            <Breadcrumb.Item>首页</Breadcrumb.Item>
-            <Breadcrumb.Item>用户</Breadcrumb.Item>
+            <Breadcrumb.Item key="1">首页</Breadcrumb.Item>
+            <Breadcrumb.Item key="2">用户</Breadcrumb.Item>
             <Switch>
-                <Route path="/stu/informationManage"><Breadcrumb.Item>个人信息</Breadcrumb.Item></Route>
-                <Route path="/stu/ActivityManagement"><Breadcrumb.Item>活动管理</Breadcrumb.Item></Route>
-                <Route path="/stu/certificate"><Breadcrumb.Item>我的证书</Breadcrumb.Item></Route>
+                {MenuList.map(it=>(
+                    <Route path={it.linkTo}><Breadcrumb.Item key={it.key}>{it.itemName}</Breadcrumb.Item></Route>
+                ))}
             </Switch>
         </Breadcrumb>
     )

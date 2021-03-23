@@ -44,7 +44,7 @@ function Login(props){
                 setIsLoading(false)
                 const userInfo = res.data.data.userInfo
                 if(userInfo !== null ){
-                    localStorage.setItem('openId', res.data.openId)
+                    localStorage.setItem('openId', userInfo.userId)
                     history.push({ pathname: `/${userInfo.type}/${userInfo.userId}`})
                 }else{
                     //console.log()

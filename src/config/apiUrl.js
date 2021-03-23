@@ -14,7 +14,9 @@ const insApi={
     getAllActivity:"http://j3820a6151.qicp.vip/business/activityManage",
     newActivity:preUrl+"/newActivity",
     getAllActivityByInsid:preUrl+"/getAllActivityByInsid/",
-    getAllTeacherAndActivityByInsId:preUrl+"/getAllTeacherAndActivityByInsId/"
+    getAllTeacherAndActivityByInsId:preUrl+"/getAllTeacherAndActivityByInsId/",
+    newACourse:preUrl+"/newACourse",
+    getAllCourseListByInsId:preUrl+"/getAllCourseListByInsId/",
 }
 const fakeLogin={
     postLogin:"https://www.fastmock.site/mock/295504c629aeca4cd4cc305983ec599f/login/Login"
