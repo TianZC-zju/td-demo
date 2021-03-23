@@ -14,7 +14,7 @@ const MyRoute = ()=>{
             <Switch>
 
                 <Route path="/ins/ActivityManagement"><ActivityList/></Route>
-                <Route path="/ins/NewActivity"><NewActivity/></Route>
+                <Route path="/ins/NewActivity/:insId"><NewActivity/></Route>
                 <Route path="/ins/CourseManagement"><CourseList/></Route>
                 <Route path="/ins/NewCourse"><NewCourse/></Route>
                 <Route path="/ins/StudentManage"><StudentList/></Route>

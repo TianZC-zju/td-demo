@@ -1,5 +1,7 @@
 import {useState} from "react"
 import {Upload} from "antd"
+import axios from "axios"
+import FormData from "form-data"
 
 const UploadLogo =()=>{
     const [previewVisible, setpreviewVisible] = useState(false)
@@ -18,7 +20,16 @@ const UploadLogo =()=>{
         setpreviewTitle(file.name || file.url.substring(file.url.lastIndexOf('/') + 1))
     };
     const handleChange = (e) => {
-        const {fileList} = e
+        const {file, fileList} = e
+        // let data = new FormData();
+        // console.log(file.name)
+        // data.append('file', file, file.name);
+        // let config = {
+        //     headers:{"Content-Type": `multipart/form-data; boundary=${data._boundary}`}
+        // }
+        // axios.post("https://imgkr.com/api/files/upload",data,config).then(res=>{
+        //     console.log(res)
+        // })
         setfileList(fileList)
     };
 
@@ -37,7 +48,7 @@ const UploadLogo =()=>{
     );
     return(
         <Upload
-            action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
+            action="https://imgkr.com/api/files/upload"
             listType="picture-card"
             fileList={fileList}
             onPreview={e=>handlePreview(e)}

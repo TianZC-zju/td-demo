@@ -1,46 +1,29 @@
 import { List, Skeleton } from 'antd';
-import React, {useEffect, useState} from 'react'
+import React, {useContext, useEffect, useState} from 'react'
 import axios from 'axios';
 import '../courseManage/CourseList.css'
 import SuperIcon from "../../public/iconfront"
 import API from "../../config/apiUrl"
 import {useHistory} from "react-router"
+import { useParams} from "react-router-dom"
+import Context from "../studentMange/MyContext"
+
 
 const fakeDataUrl2 = `https://www.fastmock.site/mock/76531f6c539f5dbd8b4fa43216bb135a/student/customer/activityManage`;
 const dataUrl = `http://lyxkaka.e1.luyouxia.net:33880/trainingInst/course`
 
 
 const ActivityList = (props)=>{
+    const {state, dispatch} = useContext(Context)
     const {insApi} =API
     const history = useHistory()
     const [activityList, setActivityList] = useState([])
     useEffect(()=>{
-        axios({method: "post",
-            url:fakeDataUrl2,
-            data:{
-                "id":1,
-                "page":1,
-                "num":1
-            },
-            withCredentials: true
+        axios({method: "get",
+            url:insApi.getAllActivityByInsid+state.insId,
         }).then(res=>{
-            // console.log(res)
-            setActivityList(res.data.data.activityList)
+            setActivityList(res.data.activityList)
         })
-        // axios.post(dataUrl,{
-        //     "name":"王田",
-        //     "number":45,
-        //     "description":"深入技术基础",
-        //     "passScore":67,
-        //     "startTime":"2020-01-02",
-        //     "endTime":"2020-01-03",
-        //     "teachers":[
-        //         {"id":2
-        //         }
-        //     ]
-        // }).then((res=>{
-        //     console.log(res)
-        // }))
 
 
     }, [])
@@ -74,11 +57,11 @@ const ActivityList = (props)=>{
                                 <SuperIcon className="hj" type="icon-huojian" />
                             }
                             title={item.topic}
-                            description={item.studentCourseList.map((it)=>`${it.courseName}: ${it.score} `)}
+                            description={item.courses.map((it)=>`${it.name}: ${it.pass_score} `)}
 
                         />
-                        <div className="Time" >{item.startTime +`-`+item.endTime}</div>
-                        <div className="certificateState">{item.certificateState?"已获得证书":"未获得证书"}</div>
+                        <div className="Time" >{item.start_time.toString().split("T")[0] +` - `+item.end_time.toString().split("T")[0]}</div>
+                        <div className="certificateState">{item.state?"已获得证书":"未获得证书"}</div>
                     </Skeleton>
                 </List.Item>
             )}

@@ -11,7 +11,10 @@ const CaApi={
     postAllActivity:"http://3d6991g746.goho.co/certificate/activity"
 }
 const insApi={
-    getAllActivity:"http://j3820a6151.qicp.vip/business/activityManage"
+    getAllActivity:"http://j3820a6151.qicp.vip/business/activityManage",
+    newActivity:preUrl+"/newActivity",
+    getAllActivityByInsid:preUrl+"/getAllActivityByInsid/",
+    getAllTeacherAndActivityByInsId:preUrl+"/getAllTeacherAndActivityByInsId/"
 }
 const fakeLogin={
     postLogin:"https://www.fastmock.site/mock/295504c629aeca4cd4cc305983ec599f/login/Login"

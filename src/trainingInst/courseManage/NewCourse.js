@@ -1,9 +1,51 @@
 import NameIndex from "./NameIndex"
-import {useState} from "react"
-import {Button, Image, Input, message} from "antd"
+import {useContext, useEffect, useState} from "react"
+import {Button, DatePicker, Input, message, Cascader} from "antd"
 import "./NewCourse.css"
+import axios from "axios"
+import API from "../../config/apiUrl"
+import Context from "../studentMange/MyContext"
 
+
+const { RangePicker } = DatePicker;
+const optionLists = [
+    {
+        value: 'zhejiang',
+        label: 'Zhejiang',
+
+    },
+    {
+        value: 'jiangsu',
+        label: 'Jiangsu',
+
+    },
+];
 const NewCourse=()=>{
+    const {state, dispatch} = useContext(Context)
+    const [value, setValue] = useState();
+    const [hackValue, setHackValue] = useState();
+    const [dates, setDates] = useState([]);
+    const [activityList, setactivityList] = useState([])
+    const [teacherList, setteacherList] = useState([])
+    const disabledDate = current => {
+        if (!dates || dates.length === 0) {
+            return false;
+        }
+        // const tooLate = dates[0] && current.diff(dates[0], 'days') > 7;
+        // const tooEarly = dates[1] && dates[1].diff(current, 'days') > 7;
+        return false;
+    };
+    const onChange = (value, selectedOptions) => {
+        console.log(value, selectedOptions);
+    };
+    const onOpenChange = open => {
+        if (open) {
+            setHackValue([]);
+            setDates([]);
+        } else {
+            setHackValue(undefined);
+        }
+    };
     const {attendNumber,introduction,name,score,teachers,StartTime,EndTime,ActivityName} =NameIndex
     const dataInit ={
         [score]:60,
@@ -32,6 +74,13 @@ const NewCourse=()=>{
         }
         message.success("修改成功")
     }
+    useEffect(()=>{
+        axios.get(API.insApi.getAllTeacherAndActivityByInsId+state.insId)
+            .then(res=>{
+                setteacherList(res.data.teacherList)
+                setactivityList(res.data.activityList)
+            })
+    },[])
     return(
         <div className="NewActivity">
 
@@ -71,35 +120,24 @@ const NewCourse=()=>{
             </div>
             <div className="teachers">
                 <label >任课老师: </label>
-                <Input
-                    style={{width:"200px"}}
-                    defaultValue={Information[score]}
-                    onChange={(e)=>changeInput(e,introduction)}
-                />
+                <Cascader options={teacherList.map(item=>({value:item.id, label:item.name}))}  onChange={onChange} changeOnSelect style={{width:"200px"}} />
             </div>
             <div className="StartTime">
-                <label >开始时间: </label>
-                <Input
+                <label >选择时间: </label>
+                <RangePicker
+                    value={hackValue || value}
+                    disabledDate={disabledDate}
+                    onCalendarChange={val => setDates(val)}
+                    onChange={val => setValue(val)}
+                    onOpenChange={onOpenChange}
                     style={{width:"200px"}}
-                    defaultValue={Information[StartTime]}
-                    onChange={(e)=>changeInput(e,introduction)}
                 />
             </div>
-            <div className="EndTime">
-                <label >结束时间: </label>
-                <Input
-                    style={{width:"200px"}}
-                    defaultValue={Information[EndTime]}
-                    onChange={(e)=>changeInput(e,introduction)}
-                />
-            </div>
+
             <div className="activityName">
                 <label >所属活动: </label>
-                <Input
-                    style={{width:"200px"}}
-                    defaultValue={Information[ActivityName]}
-                    onChange={(e)=>changeInput(e,introduction)}
-                />
+                <Cascader options={activityList.map(item=>({value:item.id, label:item.topic}))}  onChange={onChange} changeOnSelect style={{width:"200px"}} />
+
             </div>
 
 
