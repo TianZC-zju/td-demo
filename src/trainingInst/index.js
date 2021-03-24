@@ -7,23 +7,14 @@ import MyBreadcrumb from "./MyBreadcrumb"
 import MyRoute from "./MyRoute"
 import Header from "../public/Header"
 import Context from "./studentMange/MyContext"
+import MyReducer from "./MyReducer";
+
 const {  Content, Footer } = Layout;
 
 const Index = ()=>{
 
-    const store ={
-        insId:localStorage.getItem('openId')
-    }
-    const reducer = (state, action)=>{
-        switch (action.type) {
-            case "setinsId":
-                return {...state,insId:action.insId};
-            default:
-                throw  new Error();
-        }
-    }
+    const [state, dispatch] = MyReducer()
 
-    const [state, dispatch] = useReducer(reducer, store)
     return (
         <Router>
             <Header/>

@@ -17,6 +17,10 @@ const insApi={
     getAllTeacherAndActivityByInsId:preUrl+"/getAllTeacherAndActivityByInsId/",
     newACourse:preUrl+"/newACourse",
     getAllCourseListByInsId:preUrl+"/getAllCourseListByInsId/",
+    getAllStudentByInsId:preUrl+"/getAllStudentByInsId/",
+    getInsInfoByInsId:preUrl+"/getInsInfoByInsId/",
+    updateInsInfo:preUrl+"/updateInsInfo",
+
 }
 const fakeLogin={
     postLogin:"https://www.fastmock.site/mock/295504c629aeca4cd4cc305983ec599f/login/Login"

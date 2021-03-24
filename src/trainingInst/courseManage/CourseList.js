@@ -5,20 +5,30 @@ import './CourseList.css'
 import SuperIcon from "../../public/iconfront"
 import Context from "../studentMange/MyContext";
 import API from "../../config/apiUrl"
+import IndexStringConst from '../StringConst'
+import {useHistory} from "react-router-dom";
 
-const fakeDataUrl = `https://www.fastmock.site/mock/9142235e76a55a305826abc2ebab29af/trainingInst/courses`;
-const DataUrl = `lyxkaka.u1.luyouxia.net:50728/trainingInst/course`
 const   CourseList = (props)=>{
     const {state, dispatch} = useContext(Context)
     const [courseList, setCourseList] = useState([])
-
+    const history = useHistory()
     useEffect(()=>{
         axios.get(API.insApi.getAllCourseListByInsId+state.insId).then(res=>{
-            console.log(res.data)
-            // setCourseList(res.data.data)
+            setCourseList(res.data.courseList)
             })
     }, [])
-
+    const courseEdit = (index)=>{
+       dispatch({
+           type:IndexStringConst.typeList.setisCourseEdit,
+           value:true,
+       })
+        dispatch({
+            type:IndexStringConst.typeList.setcourseInfo,
+            value:courseList[index],
+        })
+        history.push("/ins/NewCourse")
+        history.go(0)
+    }
     return(
         <List
             className="demo-loadmore-list"
@@ -29,9 +39,10 @@ const   CourseList = (props)=>{
             bordered={true}
             split = {false}
             style={{backgroundColor:"white"}}
-            renderItem={item => (
+            renderItem={(item, index) => (
                 <List.Item
-                    actions={[<a key="course-edit">修改</a>, <a key="course-delete">删除</a>]}
+                    actions={[<a key="course-edit" onClick={()=>courseEdit(index)} >修改</a>, <a key="course-delete">删除</a>]}
+                    key={item.id}
                     style={{
                         backgroundColor:"white",
                     }}
@@ -43,11 +54,11 @@ const   CourseList = (props)=>{
                                 <SuperIcon className="kc" type="icon-biaoqiankuozhan_kecheng-131" />
                             }
                             title={item.name}
-                            description={"所属培训机构:"+item.institutionName+" 通过分数: "+item.passScore}
+                            description={"所属培训机构:"+item.edu_institution+" 通过分数: "+item.pass_score}
 
                         />
-                        <div className="Time" >{item.startTime.toString().split("T")[0] +` - `+item.endTime.toString().split("T")[0] }</div>
-                        <div className="certificateState">{item.teachers.map(it=>it.name+" ")}</div>
+                        <div className="Time" >{item.start_time.toString().split("T")[0] +` - `+item.end_time.toString().split("T")[0] }</div>
+                        <div className="certificateState">{item.teacherList.map(it=>it.name+" ")}</div>
                     </Skeleton>
                 </List.Item>
             )}

@@ -1,17 +1,19 @@
 import NameIndex from "./NameIndex"
 import {Input, Button, message} from "antd"
-import {useState} from "react"
+import {useContext, useEffect, useState} from "react"
 import "./InformationManage.css"
 import UploadLogo from "../../public/UploadLogo"
+import MyRS from './ReducerAndStore'
+import StringConst from "./StringConst";
+import axios from "axios";
+import API from '../../config/apiUrl'
+import Context from "../studentMange/MyContext";
+
 
 const InformationManage = ()=>{
-    const {logo, name, introduction} =NameIndex
-    const dataInit ={
-        [logo]:"https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/c2f7a5de2bb24de7ba7ef36275542d5f~tplv-k3u1fbpfcp-watermark.image",
-        [name]:"天天培训",
-        [introduction]:"专业的培训机构"
-    }
-    const [Information, setInformation]=useState(dataInit)
+    const {state, dispatch} = useContext(Context)
+    const [infoState, infoDispatch] = MyRS()
+    const {typeList} = StringConst
 
     const dataInit2={
         previewVisible: false,
@@ -25,23 +27,28 @@ const InformationManage = ()=>{
         },]
     }
 
-
-    const changeInput =(e,key)=>{
-        setInformation(state=>({...state,[key]:e.target.defaultValue}))
-    }
     const submitInf =()=>{
-        const nameToMassage={
-            [name]:"活动名称",
-            [introduction]:"活动简介",
-        }
-        for(let key in Information){
-            if(Information[key] === ''){
-                message.error(`${nameToMassage[key]} 不能为空!`)
-                return
+        axios.post(API.insApi.updateInsInfo, {...infoState, id:state.insId}).then(res=>{
+            console.log(res)
+            if(res.data.updateSuccess){
+                message.success("修改成功")
+            }else{
+                message.error("修改失败")
             }
-        }
-        message.success("修改成功")
+        }).catch(error=>{
+            console.log(error)
+            message.error("修改失败2")
+        })
+
     }
+    useEffect(()=>{
+        axios.get(API.insApi.getInsInfoByInsId+state.insId).then(res=>{
+            infoDispatch({
+                type:typeList.setinsInfo,
+                value:res.data.insInfo[0]
+            })
+        })
+    }, [])
     return(
         <div className="information">
             <div className="logo">
@@ -53,16 +60,22 @@ const InformationManage = ()=>{
                 <label >姓名: </label>
                 <Input
                     style={{width:"200px"}}
-                    defaultValue={Information[name]}
-                    onChange={(e)=>changeInput(e,name)}
+                    value={infoState.name}
+                    onChange={(e)=>infoDispatch({
+                        type:StringConst.typeList.setname,
+                        value:e.target.value
+                    })}
                 />
             </div>
             <div className="introduction">
                 <label >简介: </label>
                 <Input
                     style={{width:"200px"}}
-                    defaultValue={Information[introduction]}
-                    onChange={(e)=>changeInput(e,introduction)}
+                    value={infoState.introduction}
+                    onChange={(e)=>infoDispatch({
+                        type:StringConst.typeList.setintroduction,
+                        value:e.target.value
+                    })}
                 />
             </div>
 

@@ -56,16 +56,6 @@ const NewCourse=()=>{
         message.success("修改成功")
     }
     const submitInf =()=>{
-        // const nameToMassage={
-        //     [name]:"活动名称",
-        //     [introduction]:"活动简介",
-        // }
-        // for(let key in Information){
-        //     if(Information[key] === ''){
-        //         message.error(`${nameToMassage[key]} 不能为空!`)
-        //         return
-        //     }
-        // }
         axios.post(API.insApi.newACourse,
             {
                 courseItem:{
@@ -100,6 +90,7 @@ const NewCourse=()=>{
         })
     }
     useEffect(()=>{
+        console.log("state: ", state)
         axios.get(API.insApi.getAllTeacherAndActivityByInsId+state.insId)
             .then(res=>{
                 cDispatch({
