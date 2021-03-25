@@ -48,6 +48,8 @@ const reducer = (state, action)=>{
             return {...state,teacherList:action.teacherList};
         case "setselectActivityId":
             return {...state,selectActivityId:action.selectActivityId};
+        case "setCourseInfo":
+            return {...state,...(action.value)};
         default:
         {
             console.log(action)

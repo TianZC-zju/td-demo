@@ -24,7 +24,7 @@ const App = () =>{
                 <Route path="/ins/:insId"><InstIndex/></Route>
                 <Route exact path="/HomePage"><HomePage/></Route>
                 <Route  path="/stu/:userId"><StuIndex/></Route>
-                <Route  path="/ActivityDetail/:activityId/:userId"><ActivityDetail/></Route>
+                <Route  path="/ActivityDetail/"><ActivityDetail/></Route>
                 <Route  path="/CA/:userId"><CAIndex/></Route>
                 <Route  path="/platform/:userId"><PlatformIndex/></Route>
             </Switch>

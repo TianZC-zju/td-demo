@@ -28,8 +28,15 @@ const ActivityList = (props)=>{
 
     }, [])
     const gotoDetail =(id)=>{
+        const activityPost = {
+            insId:state.insId,
+            stuId:null,
+            activityId:id,
+            isAttend:false,
+        }
+        localStorage.setItem("activityPost", JSON.stringify(activityPost))
         history.push({
-            pathname:'/ActivityDetail/1/-1',
+            pathname:'/ActivityDetail/',
         })
         history.go(0)
     }

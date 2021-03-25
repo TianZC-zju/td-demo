@@ -8,6 +8,7 @@ const store ={
     [typeList.courseInfo]:null,
 }
 const reducer = (state, action)=>{
+    console.log("have dispatch: ", action)
     switch (action.type) {
         case typeList.setinsId:
             return {...state,[typeList.insId]:action.value};

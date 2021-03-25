@@ -27,10 +27,10 @@ const CourseList = (props)=>{
                                 <SuperIcon className="book" type="icon-book" />
                             }
                             title={item.name}
-                            description={`及格分数: ${item.score} 分`}
+                            description={`及格分数: ${item.pass_score} 分`}
 
                         />
-                        <div className="Time" >{item.teachers.map(it=>it.name+" ")}</div>
+                        {/*<div className="Time" >{item.teachers.map(it=>it.name+" ")}</div>*/}
 
                     </Skeleton>
                 </List.Item>

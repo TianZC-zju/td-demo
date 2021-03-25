@@ -18,16 +18,9 @@ const   CourseList = (props)=>{
             })
     }, [])
     const courseEdit = (index)=>{
-       dispatch({
-           type:IndexStringConst.typeList.setisCourseEdit,
-           value:true,
-       })
-        dispatch({
-            type:IndexStringConst.typeList.setcourseInfo,
-            value:courseList[index],
-        })
-        history.push("/ins/NewCourse")
-        history.go(0)
+        localStorage.setItem("courseInfo", JSON.stringify(courseList[index]))
+        history.push({pathname:"/ins/NewCourse"})
+
     }
     return(
         <List

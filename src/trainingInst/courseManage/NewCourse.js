@@ -90,7 +90,9 @@ const NewCourse=()=>{
         })
     }
     useEffect(()=>{
-        console.log("state: ", state)
+
+        // console.log("state: ", state)
+        let courseInfo = localStorage.getItem("courseInfo")
         axios.get(API.insApi.getAllTeacherAndActivityByInsId+state.insId)
             .then(res=>{
                 cDispatch({
@@ -102,7 +104,21 @@ const NewCourse=()=>{
                     ActivityList:res.data.activityList,
                 })
             })
+        if(courseInfo === null){
+
+        }else{
+            courseInfo = JSON.parse(courseInfo)
+            cDispatch({
+                type:"setCourseInfo",
+                value:courseInfo
+            })
+            localStorage.setItem("courseInfo", null)
+        }
+
     },[])
+    useEffect(()=>{
+        console.log("cState: ", cState)
+    },[cState])
     return(
         <div className="NewActivity">
 
@@ -110,7 +126,7 @@ const NewCourse=()=>{
                 <label >课程名称: </label>
                 <Input
                     style={{width:"200px"}}
-                    defaultValue={cState.name}
+                    value={cState.name}
                     onChange={
                     (e)=>{
                         cDispatch({
@@ -124,7 +140,7 @@ const NewCourse=()=>{
                 <label >课程人数: </label>
                 <Input
                     style={{width:"200px"}}
-                    defaultValue={cState.number}
+                    value={cState.number}
                     onChange={(e)=>{
                             cDispatch({
                                 type:"setnumber",
@@ -137,7 +153,7 @@ const NewCourse=()=>{
                 <label >课程简介: </label>
                 <Input
                     style={{width:"200px"}}
-                    defaultValue={cState.description}
+                    value={cState.description}
                     onChange={(e)=>{
                         cDispatch({
                             type:"setdescription",
@@ -149,7 +165,7 @@ const NewCourse=()=>{
                 <label >及格分数: </label>
                 <Input
                     style={{width:"200px"}}
-                    defaultValue={cState.pass_score}
+                    value={cState.pass_score}
                     onChange={(e)=>{
                         cDispatch({
                             type:"setpass_score",
@@ -188,7 +204,7 @@ const NewCourse=()=>{
 
             <div className="activityName">
                 <label >所属活动: </label>
-                <Cascader options={cState.ActivityList.map(item=>({value:item.id, label:item.topic}))}  onChange={(value, selectedOptions)=>cDispatch({type:"setselectActivityId", selectActivityId:value[0]})} changeOnSelect style={{width:"200px"}} />
+                <Cascader  options={cState.ActivityList.map(item=>({value:item.id, label:item.topic}))}  onChange={(value, selectedOptions)=>cDispatch({type:"setselectActivityId", selectActivityId:value[0]})} changeOnSelect style={{width:"200px"}} />
 
             </div>
 

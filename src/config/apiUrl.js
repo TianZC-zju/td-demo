@@ -14,6 +14,7 @@ const insApi={
     getAllActivity:"http://j3820a6151.qicp.vip/business/activityManage",
     newActivity:preUrl+"/newActivity",
     getAllActivityByInsid:preUrl+"/getAllActivityByInsid/",
+    getActivityByActivityId:preUrl+"/getActivityByActivityId",
     getAllTeacherAndActivityByInsId:preUrl+"/getAllTeacherAndActivityByInsId/",
     newACourse:preUrl+"/newACourse",
     getAllCourseListByInsId:preUrl+"/getAllCourseListByInsId/",
