@@ -1,4 +1,4 @@
-import SC from './StringConst'
+import SC from '../public/StringConst'
 import {useReducer} from "react";
 
 const {typeList} = SC

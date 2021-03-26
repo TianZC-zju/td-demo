@@ -4,7 +4,7 @@ import {useContext, useEffect, useState} from "react"
 import "./InformationManage.css"
 import UploadLogo from "../../public/UploadLogo"
 import MyRS from './ReducerAndStore'
-import StringConst from "./StringConst";
+import StringConst from "../../public/StringConst";
 import axios from "axios";
 import API from '../../config/apiUrl'
 import Context from "../studentMange/MyContext";

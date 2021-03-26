@@ -18,6 +18,7 @@ const insApi={
     getAllTeacherAndActivityByInsId:preUrl+"/getAllTeacherAndActivityByInsId/",
     newACourse:preUrl+"/newACourse",
     getAllCourseListByInsId:preUrl+"/getAllCourseListByInsId/",
+    getAllStudentByCourseId:preUrl+"/getAllStudentByCourseId/",
     getAllStudentByInsId:preUrl+"/getAllStudentByInsId/",
     getInsInfoByInsId:preUrl+"/getInsInfoByInsId/",
     updateInsInfo:preUrl+"/updateInsInfo",

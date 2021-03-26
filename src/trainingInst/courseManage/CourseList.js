@@ -5,7 +5,6 @@ import './CourseList.css'
 import SuperIcon from "../../public/iconfront"
 import Context from "../studentMange/MyContext";
 import API from "../../config/apiUrl"
-import IndexStringConst from '../StringConst'
 import {useHistory} from "react-router-dom";
 
 const   CourseList = (props)=>{

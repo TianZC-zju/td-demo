@@ -1,5 +1,5 @@
 import {useReducer} from "react";
-import StringConst from "./StringConst";
+import StringConst from "../../public/StringConst";
 const {typeList} = StringConst
 const store ={
     [typeList.logo]:"https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/c2f7a5de2bb24de7ba7ef36275542d5f~tplv-k3u1fbpfcp-watermark.image",

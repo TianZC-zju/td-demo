@@ -5,19 +5,26 @@ import '../courseManage/CourseList.css'
 import SuperIcon from "../../public/iconfront"
 import API from "../../config/apiUrl"
 import {useHistory} from "react-router"
-import { useParams} from "react-router-dom"
 import Context from "../studentMange/MyContext"
+import Modal from "antd/es/modal";
+import MyContext from "./MyContext";
+import SC from '../../public/StringConst'
+import StudentScore from "./StudentScore";
+import MyRS from "./MyStoreAndReducer";
 
 
-const fakeDataUrl2 = `https://www.fastmock.site/mock/76531f6c539f5dbd8b4fa43216bb135a/student/customer/activityManage`;
-const dataUrl = `http://lyxkaka.e1.luyouxia.net:33880/trainingInst/course`
+const {typeList} = SC
 
 
 const ActivityList = (props)=>{
     const {state, dispatch} = useContext(Context)
     const {insApi} =API
     const history = useHistory()
+
     const [activityList, setActivityList] = useState([])
+    const [isModalVisible,setisModalVisible] = useState(false)
+    const [activityId, setactivityId] = useState(-1)
+    const [SSstate, SSdispatch] = MyRS()
     useEffect(()=>{
         axios({method: "get",
             url:insApi.getAllActivityByInsid+state.insId,
@@ -40,7 +47,20 @@ const ActivityList = (props)=>{
         })
         history.go(0)
     }
+    const registerMarks = (activitId2)=>{
+
+        setactivityId(activitId2)
+        setisModalVisible(true)
+    }
+    const handleOk =()=>{
+        setisModalVisible(false)
+        console.log(SSstate[typeList.studentsAndScores])
+    };
+    const handleCancel =()=>{
+        setisModalVisible(false)
+    };
     return(
+        <>
         <List
             className="demo-loadmore-list"
             // loading={initLoading}
@@ -52,7 +72,9 @@ const ActivityList = (props)=>{
             style={{backgroundColor:"white"}}
             renderItem={item => (
                 <List.Item
-                    actions={[<a key="list-loadmore-edit" onClick={()=>gotoDetail(item.id)}>查看详情</a>]}
+                    actions={[<a key="list-loadmore-edit" onClick={()=>gotoDetail(item.id)}>查看详情</a>,
+                        <a key="list-register-marks" onClick={()=>registerMarks(item.id)}>录入成绩</a>]}
+                    key={item.id}
                     style={{
                         backgroundColor:"white",
                     }}
@@ -70,9 +92,17 @@ const ActivityList = (props)=>{
                         <div className="Time" >{item.start_time.toString().split("T")[0] +` - `+item.end_time.toString().split("T")[0]}</div>
                         <div className="certificateState">{item.state?"已获得证书":"未获得证书"}</div>
                     </Skeleton>
+
                 </List.Item>
+
             )}
         />
+            <Modal title="成绩录入:" visible={isModalVisible} onOk={handleOk} onCancel={handleCancel} >
+                <MyContext.Provider value={{activityId, SSstate, SSdispatch} }>
+                    <StudentScore/>
+                </MyContext.Provider>
+            </Modal>
+        </>
     )
 }
 export default ActivityList
