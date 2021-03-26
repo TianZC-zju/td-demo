@@ -1,4 +1,4 @@
-const preUrl="http://127.0.0.1:7001/tm"
+const preUrl="http://30104e2935.eicp.vip/tm"
 const stuApi={
     getStuInfoById  :preUrl+"/getStuInfoById/",
     updateStuInfo:preUrl+"/updateStuInfo",
