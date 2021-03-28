@@ -1,4 +1,4 @@
-const preUrl="http://30104e2935.eicp.vip/tm"
+const preUrl="http://tzc2021.cn.utools.club/tm"
 const stuApi={
     getStuInfoById  :preUrl+"/getStuInfoById/",
     updateStuInfo:preUrl+"/updateStuInfo",
