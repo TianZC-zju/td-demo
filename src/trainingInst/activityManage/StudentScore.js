@@ -1,7 +1,7 @@
 import React, {useContext, useEffect} from 'react'
 import MyContext from "./MyContext";
 import SC from '../../public/StringConst'
-import {List, Tabs, Table, Tag, Space, Input} from "antd";
+import {List, Tabs, Table, Tag, Space, Input, InputNumber} from "antd";
 import axios from "axios";
 import API from '../../config/apiUrl'
 import MyRS from "./MyStoreAndReducer";
@@ -12,7 +12,7 @@ const {typeList } = SC
 const { TabPane } = Tabs;
 const { Column, ColumnGroup } = Table;
 const StudentScore = ()=>{
-    const {activityId, SSstate, SSdispatch} = useContext(MyContext)
+    const {activityId, SSstate, SSdispatch, updateScore} = useContext(MyContext)
 
     useEffect(()=>{
         axios.post(API.insApi.getActivityByActivityId,{activityId}).then(res=>{
@@ -45,12 +45,11 @@ const StudentScore = ()=>{
                                 title="成绩"
                                 key={typeList.score}
                                 render={(text, record) => {
-                                   return( <Input
+                                   return( <InputNumber min={0} max={100}
                                        defaultValue={text[typeList.score]}
-                                        onchange={(e)=>SSdispatch({
-                                            type:typeList.updateStudentScore,
-                                            value:{...text,[typeList.score]:e.target.value}
-                                        })}
+                                        onChange={(e)=>{
+                                            updateScore({...text, score:e})
+                                        }}
                                     />)
                                 }}
                             />

@@ -5,10 +5,12 @@ import SuperIcon from "../../public/iconfront"
 import NameIndex from "./NameIndex"
 import Modal from "antd/es/modal"
 import Mentions from "antd/es/mentions"
+import ActivityStateList from "../../public/ActivityStateList";
+import StringConst from "../../public/StringConst";
+import API from '../../config/apiUrl'
+import axios from "axios";
 
-// const fakeDataUrl2 = `https://www.fastmock.site/mock/76531f6c539f5dbd8b4fa43216bb135a/student/customer/activityManage`;
-// const dataUrl = `http://lyxkaka.e1.luyouxia.net:33880/trainingInst/course`
-
+const {typeList} = StringConst
 
 const CertificateList = (props)=>{
     const numToState={
@@ -17,40 +19,8 @@ const CertificateList = (props)=>{
         2:"已拒绝"
     }
     const {activityName, applicant,applicationNum,template,auditState,introduction } = NameIndex
-    const dataInit=[{
-        [activityName]:"火箭制造",
-        [applicant]:"李老师",
-        [applicationNum]:45,
-        [template]:"证书模板一",
-        [auditState]:0,
-        [introduction]:"学生已经认真完成作业,考试, 给予通过",
-    },
-     {
-        [activityName]:"火箭制造",
-        [applicant]:"李老师",
-        [applicationNum]:45,
-        [template]:"证书模板一",
-        [auditState]:0,
-        [introduction]:"学生已经认真完成作业,考试, 给予通过",
-    },
-     {
-        [activityName]:"飞机制造",
-        [applicant]:"田老师",
-        [applicationNum]:45,
-        [template]:"证书模板一",
-        [auditState]:0,
-        [introduction]:"学生已经认真完成作业,考试, 给予通过",
-    },
-     {
-        [activityName]:"汽车制造",
-        [applicant]:"王老师",
-        [applicationNum]:46,
-        [template]:"证书模板一",
-        [auditState]:0,
-        [introduction]:"学生已经认真完成作业,考试, 给予通过",
-    },
-    ]
-    const [certificateList, setCertificateList] = useState(dataInit)
+
+    const [certificateList, setCertificateList] = useState([])
     const [isModalVisible, setIsModalVisible] = useState(false);
     const [form] = Form.useForm();
     // useEffect(()=>{
@@ -63,9 +33,17 @@ const CertificateList = (props)=>{
     //     })
     // }, [])
     const passItem=(e,index)=>{
-        let Info = [...certificateList]
-        Info[index][auditState]=1
-        setCertificateList(Info)
+        // let Info = [...certificateList]
+        // Info[index][auditState]=1
+        // setCertificateList(Info)
+        axios.post(API.CaApi.passApplyCA,[{
+            activityName:"区块链活动一",
+            student:"pyd",
+            "studentId":"1",
+            "activityId":"1"
+        }]).then(res=>{
+
+        })
         message.success("修改成功")
     }
     const refuseItem=(e,index)=>{
@@ -85,6 +63,12 @@ const CertificateList = (props)=>{
         setIsModalVisible(false);
         message.success("修改成功")
     }
+    useEffect(()=>{
+        axios.get(API.CaApi.getAllActivityApplyCA).then(res=>{
+            console.log(res.data)
+            setCertificateList(res.data.activityList)
+        })
+    }, [])
     return(
         <>
             <List
@@ -111,8 +95,8 @@ const CertificateList = (props)=>{
                                 avatar={
                                     <SuperIcon className="student" type="icon-Student" />
                                 }
-                                title={item[activityName]}
-                                description={`申请者: ${item[applicant]} 申请数量: ${item[applicationNum]} ${item[introduction]}`}
+                                title={item[typeList.topic]}
+                                description={`申请者: ${item[typeList.insName]}  申请状态: ${ActivityStateList[item[typeList.state]]} `}
                             />
                         </Skeleton>
                         <div>{item[template]}</div>
@@ -127,6 +111,11 @@ const CertificateList = (props)=>{
                     </Mentions>
 
             </Modal>
+            <form name="formName" action={API.CaApi.verifyCA}  method="post" enctype ="multipart/form-data">
+                <input type="file" name="file"></input>
+                    <input type="text" name="seq"></input>
+                        <input type="submit" value="提交"></input>
+            </form>
         </>
 
     )
