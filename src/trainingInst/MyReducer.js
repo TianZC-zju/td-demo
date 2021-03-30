@@ -4,6 +4,7 @@ import {useReducer} from "react";
 const {typeList} = SC
 const store ={
     [typeList.insId]:localStorage.getItem('openId'),
+    [typeList.stuId]:localStorage.getItem('openId'),
     [typeList.isCourseEdit]:false,
     [typeList.courseInfo]:null,
 }
@@ -12,6 +13,8 @@ const reducer = (state, action)=>{
     switch (action.type) {
         case typeList.setinsId:
             return {...state,[typeList.insId]:action.value};
+        case typeList.setstuId:
+            return {...state,[typeList.stuId]:action.value};
         case typeList.setisCourseEdit:
             return {...state,[typeList.isCourseEdit]:action.value};
         case typeList.setcourseInfo:

@@ -26,14 +26,16 @@ const ActivityList = (props)=>{
     const [activityId, setactivityId] = useState(-1)
     const [SSstate, SSdispatch] = MyRS()
     useEffect(()=>{
+        newList()
+    }, [])
+
+    const newList=()=>{
         axios({method: "get",
             url:insApi.getAllActivityByInsid+state.insId,
         }).then(res=>{
             setActivityList(res.data.activityList)
         })
-
-
-    }, [])
+    }
     const gotoDetail =(id)=>{
         const activityPost = {
             insId:state.insId,
@@ -80,6 +82,7 @@ const ActivityList = (props)=>{
             }else{
                 message.error("修改成绩失败")
             }
+            newList()
         })
     };
     const handleCancel =()=>{
@@ -87,6 +90,25 @@ const ActivityList = (props)=>{
     };
     const updateScore =(score)=>{
         setscoreList(state=>({...state, [`${score.id}${score.course_id}`]:score}))
+    }
+    const applyStu =(index)=>{
+        const AS = (activityList[index].state).toString()
+        if(AS  !== "0" && AS  !== "3" ){
+            message.error(ActivityStateList[AS] + ", 不能申请招生")
+        }else{
+            axios.post(API.CaApi.updateActivityStateByActivityId,{
+                state:1,
+                activityId:activityList[index].id
+            }).then(res=>{
+                if(res.data.updateSuccess){
+                    message.success("已申请")
+                }else {
+                    message.error("申请失败")
+                }
+                newList()
+            })
+
+        }
     }
     return(
         <>
@@ -102,6 +124,7 @@ const ActivityList = (props)=>{
             renderItem={(item, index) => (
                 <List.Item
                     actions={[<a key="list-loadmore-edit" onClick={()=>gotoDetail(item.id)}>查看详情</a>,
+                        <a key="list-addStudent" onClick={()=>applyStu(index)}>申请招生</a>,
                         <a key="list-register-marks" onClick={()=>registerMarks(item.id)}>录入成绩</a>,
                         <a key="list-apply-ca" onClick={()=>applyCA(item.id, index)}>申请证书</a>,
                     ]}

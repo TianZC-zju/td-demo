@@ -2,8 +2,11 @@ import {Image} from "antd"
 import MyPDF from './pic/ce.pdf'
 import Button from "antd/es/button"
 import "./CertDetail.css"
+import API from "../../config/apiUrl"
 const CertDetail=() =>{
-    const picUrl="https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/42db7cc96cfb4e33960cc4a24347e7a5~tplv-k3u1fbpfcp-watermark.image"
+    const CAItem = JSON.parse(localStorage.getItem("CAItem"))
+    console.log("CAItem",CAItem)
+    const picUrl=CAItem.picSrc
     return(
 
 
@@ -11,11 +14,11 @@ const CertDetail=() =>{
         <Image src={picUrl}>
             这是证书
         </Image>
-        <a href={MyPDF} download>
-            <Button>
+
+            <Button onClick={()=>window.location.assign(API.CaApi.getCA+CAItem.chain_info)}>
                 下载证书
             </Button>
-        </a>
+
     </div>
 
     )

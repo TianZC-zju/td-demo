@@ -100,6 +100,7 @@ const CertificateList = (props)=>{
                 })
             }
         }
+        console.log(postData)
         axios.post(API.CaApi.passApplyCA,postData).then(res=>{
             saveCA(res.data.data, index)
 
@@ -158,21 +159,9 @@ const CertificateList = (props)=>{
             console.log(res)
         })
     }
-    const [file1, setfile1] = useState()
-    const [uploading, setuploading] = useState(false)
-    const handleUpload = () => {
 
-        const formData = new FormData();
-        formData.append("file", file1)
-        axios.post(API.CaApi.verifyCA,formData,{headers:{'Content-Type': 'multipart/form-data',"seq":"d3b17ad4-163b-48cb-8675-2f97d"}}).then(
-            res=>{
-                console.log(res)
-            }
-        )
-    };
-    const changefile = (e)=>{
-        setfile1(e.target.files[0])
-    }
+    const [uploading, setuploading] = useState(false)
+
     // const  funDownload =  (content, filename)=> {
     //     // 创建隐藏的可下载链接
     //     const eleLink = document.createElement('a')
@@ -233,12 +222,8 @@ const CertificateList = (props)=>{
                 </Mentions>
 
             </Modal>
-            <form name="formName" action={API.CaApi.verifyCA}  method="post" enctype ="multipart/form-data">
-                <input type="file" name="file" onChange={(e)=>changefile(e)}></input>
-                    <input type="text" name="seq"></input>
-                        <input type="submit" value="提交" ></input>
-            </form>
-            <Button onClick={()=>handleUpload()}>上传</Button>
+
+
             <Button onClick={()=>window.location.assign("http://3n7998852l.wicp.vip/certificate/download/eb4670f8-86ef-4e66-9fe1-53fccf436e7c")}>下载</Button>
         </>
 

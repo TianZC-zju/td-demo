@@ -6,7 +6,11 @@ const stuApi={
     getStuInfoById  :preUrl+"/getStuInfoById/",
     updateStuInfo:preUrl+"/updateStuInfo",
     getAllActivityByStuId:preUrl+"/getAllActivityByStuId/",
+    getAllActiviyByState:preUrl+"/getAllActiviyByState",
     postActivityByid:preUrl+"/postActivityByid",
+    getCAByStuId:preUrl+"/getCAByStuId",
+    stuAddActivity:preUrl+"/stuAddActivity",
+    isStuHasActivity:preUrl+"/isStuHasActivity",
     fakepostAllActivity:"https://www.fastmock.site/mock/76531f6c539f5dbd8b4fa43216bb135a/student/customer/activityManage",
 
 }

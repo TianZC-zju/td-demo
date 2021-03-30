@@ -17,6 +17,7 @@ Image{width: 100%;}
 }
 .firstContent .logo{
     margin: 10px;
+    height: 160px;
 }
 
 .firstContent .timeAndNumber{

@@ -5,13 +5,17 @@ import { Layout} from "antd"
 import MySiderMenu from "./MyMenu"
 import MyBreadcrumb from "./MyBreadcrumb"
 import MyRoute from "./MyRoute"
+import MyReducer from "../trainingInst/MyReducer"
+import Context from "../trainingInst/studentMange/MyContext"
 const {  Content, Footer } = Layout;
 
 const Index = ()=>{
+    const [state, dispatch] = MyReducer()
     return (
         <Router>
             <Header/>
             <Layout style={{ minHeight: '100vh' }}>
+                <Context.Provider value={{state, dispatch}}>
                 <MySiderMenu/>
                 <Layout className="site-layout">
                     <Content style={{ margin: '0 16px' }}>
@@ -20,6 +24,7 @@ const Index = ()=>{
                     </Content>
                     <Footer style={{ textAlign: 'center' }}>Ant Design ©2018 Created by Ant UED</Footer>
                 </Layout>
+                </Context.Provider>
             </Layout>
         </Router>
     )

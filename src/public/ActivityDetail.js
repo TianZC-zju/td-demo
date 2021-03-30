@@ -12,10 +12,7 @@ const {typeList} = SC
 const ActivityDetail=()=>{
     const activityPost = JSON.parse(localStorage.getItem("activityPost"))
     const [ADState, ADDispatch] = MyUseReducer()
-    const [topic, settopic] = useState("")
     const [activity, setActivity]=useState({})
-    const [activityDe, setActivityDe]=useState({})
-    const [eduInstitution, setEduInstitution] = useState({})
     const [showappend, setshowappend] = useState(true)
     useEffect(()=>{
 
@@ -29,17 +26,24 @@ const ActivityDetail=()=>{
                 type:typeList.setactivityInfo,
                 value:res.data.activityList[0]
             })
-
         }).catch(er=>{
             console.log(er)
         })
-
-        // axios.post(API.stuApi.postActivityByid,{
-        //     activityId,
-        //     userId
-        // }).then(res=>{
-        //     settopic(res.data.data[0].topic)
-        // })
+        if(activityPost.stuId !== null){
+            axios.post(API.stuApi.isStuHasActivity,{
+                stuId:activityPost.stuId,
+                activityId:activityPost.activityId,
+            }).then(res=>{
+                if(res.data.result.length === 0){
+                    activityPost.isAttend = false
+                }
+            })
+        }
+        if(activityPost.isAttend){
+            setshowappend(false)
+        }else{
+            setshowappend(true)
+        }
     },[])
     const appendBtn=()=>(
         <Button onClick={()=>changeShowappend()} type="primary">立即参加</Button>
@@ -48,6 +52,17 @@ const ActivityDetail=()=>{
         <Button onClick={()=>changeShowappend()}>取消参加</Button>
     )
     const changeShowappend =()=>{
+        if(showappend === true && activityPost.stuId !== null ) {
+            axios.post(API.stuApi.stuAddActivity, {
+                stuId: activityPost.stuId,
+                activityId: activityPost.activityId
+            }).then(res => {
+                console.log(res)
+            })
+        }
+        // else if(showappend === false && activityPost.stuId !== null) {
+        //
+        // }
         setshowappend(!showappend)
     }
     const dataF=(data)=>{
