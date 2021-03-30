@@ -29,13 +29,7 @@ const ActivityDetail=()=>{
                 type:typeList.setactivityInfo,
                 value:res.data.activityList[0]
             })
-            // ADDispatch({
-            //     type:typeList.setcourseList,
-            //     value:res.data.activityList[0].courses
-            // })
-            // setActivity(res.data.activityList[0])
-            // setActivityDe(res.data.Activity)
-            // setEduInstitution(res.data.EduInstitution)
+
         }).catch(er=>{
             console.log(er)
         })

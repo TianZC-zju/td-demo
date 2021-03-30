@@ -1,5 +1,7 @@
 const preUrl="http://127.0.0.1:7001/tm"
 const farPre = "http://3n7998852l.wicp.vip"
+// c
+// onst farPre = "http://47.94.252.160:8080"
 const stuApi={
     getStuInfoById  :preUrl+"/getStuInfoById/",
     updateStuInfo:preUrl+"/updateStuInfo",
@@ -11,10 +13,12 @@ const stuApi={
 const CaApi={
     getAllActivityApplyStu:preUrl+"/ca/getAllActivityApplyStu",
     updateActivityStateByActivityId:preUrl+"/ca/updateActivityStateByActivityId",
+    updateActivityRejectReasonByActivityId:preUrl+"/ca/updateActivityRejectReasonByActivityId",
     getAllActivityApplyCA:preUrl+"/ca/getAllActivityApplyCA",
     passApplyCA:farPre+"/certificate/apply",
     getCA:farPre+"/certificate/download/",
-    verifyCA:farPre+"/certificate/verify/"
+    verifyCA:farPre+"/certificate/verify/",
+    saveCA:preUrl+"/ca/saveCA",
 }
 const insApi={
     getAllActivity:"http://j3820a6151.qicp.vip/business/activityManage",

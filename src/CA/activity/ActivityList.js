@@ -2,7 +2,6 @@ import {List, message, Skeleton} from 'antd'
 import React, {useEffect, useState} from 'react'
 import axios from 'axios';
 import SuperIcon from "../../public/iconfront"
-import NameIndex from "./NameIndex"
 import API from "../../config/apiUrl"
 import Modal from "antd/es/modal"
 import Mentions from "antd/es/mentions"
@@ -12,35 +11,21 @@ import ActivityStateList from "../../public/ActivityStateList";
 
 const {typeList} = StringConst
 const ActivityList = (props)=>{
-    const {activityName, insName,auditState} = NameIndex
-    const dataInit=[{
-        [activityName]:"火箭制造",
-        [insName]:"天天培训机构",
-        [auditState]:false
-    },
-        {
-        [activityName]:"飞机制造",
-        [insName]:"天天培训机构2",
-        [auditState]:false
-    },
-        {
-        [activityName]:"汽车制造",
-        [insName]:"天天培训机构2",
-        [auditState]:true
-    },
-
-    ]
-    const [certificateList, setCertificateList] = useState(dataInit)
+    const [reject_reason,setreject_reason] = useState("")
     const [isModalVisible, setIsModalVisible] = useState(false);
-    const [activityList, setActivityList] = useState(dataInit)
+    const [currentIndex, setcurrentIndex] = useState(1)
+    const [activityList, setActivityList] = useState([])
     useEffect(()=>{
+        newList()
 
+    }, [])
+    const newList=()=>{
         axios({method: "get",
             url:API.CaApi.getAllActivityApplyStu,
         }).then(res=>{
             setActivityList(res.data.activityList)
         })
-    }, [])
+    }
     const passItem=(e,index)=>{
         const AS = (activityList[index].state).toString()
         if(AS  !== "1" && AS  !== "3" ){
@@ -50,16 +35,24 @@ const ActivityList = (props)=>{
                 activityId:activityList[index].id,
                 state: 2
             }).then(res=>{
-                console.log(res)
+                if(res.data.updateSuccess){
+                    message.success("活动申请招生完成")
+                    newList()
+                }else {
+                    message.error("申请招生失败")
+                }
             })
             message.success("修改成功")
         }
 
     }
     const refuseItem=(e,index)=>{
-        let Info = [...certificateList]
-        Info[index][auditState]=2
-        setCertificateList(Info)
+        const AS = (activityList[index].state).toString()
+        if(AS  !== "1" ){
+            message.error(ActivityStateList[AS] )
+            return
+        }
+        setcurrentIndex(index)
         setIsModalVisible(true)
 
 
@@ -69,22 +62,25 @@ const ActivityList = (props)=>{
     const handleCancel = () => {
         setIsModalVisible(false);
     };
-    const handleOk =(index)=>{
-        console.log(index)
+    const handleOk =()=>{
+
         setIsModalVisible(false);
-        message.success("修改成功")
-        // const AS = (activityList[index].state).toString()
-        // if(AS  !== "1" && AS  !== "3" ){
-        //     message.error(ActivityStateList[AS] + ", 不能申请招生")
-        // }else {
-        //     axios.post(API.CaApi.updateActivityStateByActivityId,{
-        //         activityId:activityList[index].id,
-        //         state: 3
-        //     }).then(res=>{
-        //         console.log(res)
-        //     })
-        //     message.success("修改成功")
-        // }
+        axios.post(API.CaApi.updateActivityRejectReasonByActivityId,{
+            state:3,
+            reject_reason,
+            activityId:activityList[currentIndex].id
+        }).then(res=>{
+            if(res.data.updateSuccess){
+                message.success("修改成功")
+                newList()
+            }else{
+                message.error("修改失败")
+            }
+        })
+
+    }
+    const changeRejectReason =(e)=>{
+        setreject_reason(e)
     }
     return(
         <>
@@ -116,9 +112,9 @@ const ActivityList = (props)=>{
 
                             />
                         </Skeleton>
-                        <Modal title="请输入拒绝的原因:" visible={isModalVisible} onOk={()=>handleOk(index)} onCancel={handleCancel}>
+                        <Modal title="请输入拒绝的原因:" visible={isModalVisible} onOk={handleOk} onCancel={handleCancel}>
 
-                            <Mentions rows={3} placeholder="请在这输入">
+                            <Mentions rows={3} placeholder="请在这输入" onChange={(e)=>changeRejectReason(e)}>
 
                             </Mentions>
 
