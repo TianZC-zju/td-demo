@@ -1,4 +1,4 @@
-import { List, Skeleton } from 'antd';
+import {List, message, Skeleton} from 'antd';
 import React, {useContext, useEffect, useState} from 'react'
 import axios from 'axios';
 import '../courseManage/CourseList.css'
@@ -11,7 +11,7 @@ import MyContext from "./MyContext";
 import SC from '../../public/StringConst'
 import StudentScore from "./StudentScore";
 import MyRS from "./MyStoreAndReducer";
-
+import ActivityStateList from "../../public/ActivityStateList";
 
 const {typeList} = SC
 
@@ -20,7 +20,7 @@ const ActivityList = (props)=>{
     const {state, dispatch} = useContext(Context)
     const {insApi} =API
     const history = useHistory()
-
+    const [scoreList, setscoreList ] = useState({})
     const [activityList, setActivityList] = useState([])
     const [isModalVisible,setisModalVisible] = useState(false)
     const [activityId, setactivityId] = useState(-1)
@@ -52,13 +52,42 @@ const ActivityList = (props)=>{
         setactivityId(activitId2)
         setisModalVisible(true)
     }
+    const applyCA = (activitId2, index)=>{
+        const AS = (activityList[index].state).toString()
+        if(AS  !== "2" && AS  !== "6" ){
+            message.error(ActivityStateList[AS] + ", 不能申请证书")
+        }else{
+            axios.get(API.insApi.applyCAByInsId+activitId2).then(res=>{
+                if(res.data.updateSuccess){
+                    message.success("申请成功")
+                }else {
+                    message.error("申请失败")
+                }
+            })
+
+        }
+
+    }
     const handleOk =()=>{
         setisModalVisible(false)
-        console.log(SSstate[typeList.studentsAndScores])
+        for (const index in scoreList) {
+            const item = scoreList[index];
+            console.log(item)
+        }
+        axios.post(API.insApi.updateScore,{scoreList}).then(res=>{
+            if (res.data.updateSuccess){
+                message.success("修改成绩成功")
+            }else{
+                message.error("修改成绩失败")
+            }
+        })
     };
     const handleCancel =()=>{
         setisModalVisible(false)
     };
+    const updateScore =(score)=>{
+        setscoreList(state=>({...state, [`${score.id}${score.course_id}`]:score}))
+    }
     return(
         <>
         <List
@@ -70,10 +99,12 @@ const ActivityList = (props)=>{
             bordered={true}
             split = {false}
             style={{backgroundColor:"white"}}
-            renderItem={item => (
+            renderItem={(item, index) => (
                 <List.Item
                     actions={[<a key="list-loadmore-edit" onClick={()=>gotoDetail(item.id)}>查看详情</a>,
-                        <a key="list-register-marks" onClick={()=>registerMarks(item.id)}>录入成绩</a>]}
+                        <a key="list-register-marks" onClick={()=>registerMarks(item.id)}>录入成绩</a>,
+                        <a key="list-apply-ca" onClick={()=>applyCA(item.id, index)}>申请证书</a>,
+                    ]}
                     key={item.id}
                     style={{
                         backgroundColor:"white",
@@ -90,7 +121,7 @@ const ActivityList = (props)=>{
 
                         />
                         <div className="Time" >{item.start_time.toString().split("T")[0] +` - `+item.end_time.toString().split("T")[0]}</div>
-                        <div className="certificateState">{item.state?"已获得证书":"未获得证书"}</div>
+                        <div className="certificateState">{ActivityStateList[item.state]}</div>
                     </Skeleton>
 
                 </List.Item>
@@ -98,7 +129,7 @@ const ActivityList = (props)=>{
             )}
         />
             <Modal title="成绩录入:" visible={isModalVisible} onOk={handleOk} onCancel={handleCancel} >
-                <MyContext.Provider value={{activityId, SSstate, SSdispatch} }>
+                <MyContext.Provider value={{activityId, SSstate, SSdispatch, updateScore} }>
                     <StudentScore/>
                 </MyContext.Provider>
             </Modal>
