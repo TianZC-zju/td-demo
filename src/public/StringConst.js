@@ -30,6 +30,7 @@ const typeList = {
     courses:"courses",
     reject_reason:"reject_reason",
     insId:"insId",
+    insName:"insName",
     setinsId:"setinsId",
     isCourseEdit:"isCourseEdit",
     setisCourseEdit:"setisCourseEdit",

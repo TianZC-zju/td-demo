@@ -5,10 +5,12 @@ import SuperIcon from "../../public/iconfront"
 import NameIndex from "./NameIndex"
 import Modal from "antd/es/modal"
 import Mentions from "antd/es/mentions"
+import ActivityStateList from "../../public/ActivityStateList";
+import StringConst from "../../public/StringConst";
+import API from '../../config/apiUrl'
+import axios from "axios";
 
-// const fakeDataUrl2 = `https://www.fastmock.site/mock/76531f6c539f5dbd8b4fa43216bb135a/student/customer/activityManage`;
-// const dataUrl = `http://lyxkaka.e1.luyouxia.net:33880/trainingInst/course`
-
+const {typeList} = StringConst
 
 const CertificateList = (props)=>{
     const numToState={
@@ -85,6 +87,11 @@ const CertificateList = (props)=>{
         setIsModalVisible(false);
         message.success("修改成功")
     }
+    useEffect(()=>{
+        axios.get(API.CaApi.getAllActivityApplyCA).then(res=>{
+            setCertificateList(res.data.activityList)
+        })
+    }, [])
     return(
         <>
             <List
@@ -111,8 +118,8 @@ const CertificateList = (props)=>{
                                 avatar={
                                     <SuperIcon className="student" type="icon-Student" />
                                 }
-                                title={item[activityName]}
-                                description={`申请者: ${item[applicant]} 申请数量: ${item[applicationNum]} ${item[introduction]}`}
+                                title={item[typeList.topic]}
+                                description={`申请者: ${item[typeList.insName]}  申请状态: ${ActivityStateList[item[typeList.state]]} `}
                             />
                         </Skeleton>
                         <div>{item[template]}</div>

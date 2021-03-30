@@ -3,15 +3,15 @@ import React, {useEffect, useState} from 'react'
 import axios from 'axios';
 import SuperIcon from "../../public/iconfront"
 import NameIndex from "./NameIndex"
-import Api from "../../config/apiUrl"
+import API from "../../config/apiUrl"
 import Modal from "antd/es/modal"
 import Mentions from "antd/es/mentions"
-// const fakeDataUrl2 = `https://www.fastmock.site/mock/76531f6c539f5dbd8b4fa43216bb135a/student/customer/activityManage`;
-// const dataUrl = `http://lyxkaka.e1.luyouxia.net:33880/trainingInst/course`
+import StringConst from "../../public/StringConst";
+import ActivityStateList from "../../public/ActivityStateList";
 
 
+const {typeList} = StringConst
 const ActivityList = (props)=>{
-    const {CaApi} = Api
     const {activityName, insName,auditState} = NameIndex
     const dataInit=[{
         [activityName]:"火箭制造",
@@ -35,23 +35,26 @@ const ActivityList = (props)=>{
     const [activityList, setActivityList] = useState(dataInit)
     useEffect(()=>{
 
-        axios({method: "post",
-            url:CaApi.postAllActivity,
-            data:{"phone":"12345678999",
-                "page":1,
-                "num":2,
-                "filter":-1
-            },
-            withCredentials: true
+        axios({method: "get",
+            url:API.CaApi.getAllActivityApplyStu,
         }).then(res=>{
-            console.log(res)
+            setActivityList(res.data.activityList)
         })
     }, [])
     const passItem=(e,index)=>{
-        let Info = [...certificateList]
-        Info[index][auditState]=1
-        setCertificateList(Info)
-        message.success("修改成功")
+        const AS = (activityList[index].state).toString()
+        if(AS  !== "1" && AS  !== "3" ){
+            message.error(ActivityStateList[AS] + ", 不能申请招生")
+        }else {
+            axios.post(API.CaApi.updateActivityStateByActivityId,{
+                activityId:activityList[index].id,
+                state: 2
+            }).then(res=>{
+                console.log(res)
+            })
+            message.success("修改成功")
+        }
+
     }
     const refuseItem=(e,index)=>{
         let Info = [...certificateList]
@@ -59,16 +62,29 @@ const ActivityList = (props)=>{
         setCertificateList(Info)
         setIsModalVisible(true)
 
+
     }
 
 
     const handleCancel = () => {
         setIsModalVisible(false);
     };
-    const handleOk =()=>{
-        console.log(1)
+    const handleOk =(index)=>{
+        console.log(index)
         setIsModalVisible(false);
         message.success("修改成功")
+        // const AS = (activityList[index].state).toString()
+        // if(AS  !== "1" && AS  !== "3" ){
+        //     message.error(ActivityStateList[AS] + ", 不能申请招生")
+        // }else {
+        //     axios.post(API.CaApi.updateActivityStateByActivityId,{
+        //         activityId:activityList[index].id,
+        //         state: 3
+        //     }).then(res=>{
+        //         console.log(res)
+        //     })
+        //     message.success("修改成功")
+        // }
     }
     return(
         <>
@@ -84,6 +100,7 @@ const ActivityList = (props)=>{
                 renderItem={(item, index) => (
                     <List.Item
                         actions={[<a key="list-loadmore-edit">详情</a>,<a onClick={e=>passItem(e,index)}>通过</a>,<a onClick={e=>refuseItem(e,index)}>拒绝</a>]}
+                        key={item[typeList.id]}
                         style={{
                             backgroundColor:"white",
                         }}
@@ -94,22 +111,23 @@ const ActivityList = (props)=>{
                                 avatar={
                                     <SuperIcon className="student" type="icon-Student" />
                                 }
-                                title={item[activityName]}
-                                description={`申请机构: ${item[insName]}  审核状态: ${item[auditState]===false?"未审核":"已经审核"}`}
+                                title={item[typeList.topic]}
+                                description={`申请机构: ${item[typeList.insName]}  审核状态: ${ActivityStateList[item[typeList.state]]}`}
 
                             />
                         </Skeleton>
+                        <Modal title="请输入拒绝的原因:" visible={isModalVisible} onOk={()=>handleOk(index)} onCancel={handleCancel}>
+
+                            <Mentions rows={3} placeholder="请在这输入">
+
+                            </Mentions>
+
+                        </Modal>
                     </List.Item>
                 )}
             />
 
-            <Modal title="请输入拒绝的原因:" visible={isModalVisible} onOk={handleOk} onCancel={handleCancel}>
 
-                <Mentions rows={3} placeholder="请在这输入">
-
-                </Mentions>
-
-            </Modal>
         </>
 
     )

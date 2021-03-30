@@ -8,7 +8,9 @@ const stuApi={
 
 }
 const CaApi={
-    postAllActivity:"http://3d6991g746.goho.co/certificate/activity"
+    getAllActivityApplyStu:preUrl+"/ca/getAllActivityApplyStu",
+    updateActivityStateByActivityId:preUrl+"/ca/updateActivityStateByActivityId",
+    getAllActivityApplyCA:preUrl+"/ca/getAllActivityApplyCA",
 }
 const insApi={
     getAllActivity:"http://j3820a6151.qicp.vip/business/activityManage",
@@ -24,7 +26,6 @@ const insApi={
     updateInsInfo:preUrl+"/updateInsInfo",
     updateScore:preUrl + "/updateScore",
     applyCAByInsId:preUrl + "/applyCAByInsId/",
-
 }
 const fakeLogin={
     postLogin:"https://www.fastmock.site/mock/295504c629aeca4cd4cc305983ec599f/login/Login"
