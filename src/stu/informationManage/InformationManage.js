@@ -6,6 +6,7 @@ import moment from 'moment';
 import { DatePicker, Space, message } from 'antd';
 import axios from "axios"
 import API from "../../config/apiUrl"
+import generateAPIDoc from "../../config/generateAPIDoc";
 const { RangePicker } = DatePicker;
 
 
@@ -32,10 +33,15 @@ const InformationManage = ()=>{
             }else{
                 message.error("修改失败")
             }
+            generateAPIDoc("updateStuInfo",API.stuApi.updateStuInfo,"post",{
+                id,name,phone,avatar,
+                introduction, gender,
+            },res.data)
         }).catch(er=>{
             console.log(er)
             message.error("修改失败")
         })
+
     }
 
     useEffect(()=>{
@@ -46,6 +52,7 @@ const InformationManage = ()=>{
             setphone(res.data.data[0].phone)
             setintroduction(res.data.data[0].introduction)
             setid(res.data.data[0].id)
+            generateAPIDoc("getStuInfoById",API.stuApi.getStuInfoById+"1","get","",res.data)
         })
     },[])
     return(

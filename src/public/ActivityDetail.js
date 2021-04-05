@@ -8,6 +8,7 @@ import API from '../config/apiUrl'
 import Header from "./Header"
 import MyUseReducer from "./MyUseReducer";
 import SC from './StringConst'
+import generateAPIDoc from "../config/generateAPIDoc";
 const {typeList} = SC
 const ActivityDetail=()=>{
     const activityPost = JSON.parse(localStorage.getItem("activityPost"))
@@ -21,6 +22,9 @@ const ActivityDetail=()=>{
         axios.post(API.insApi.getActivityByActivityId,{
             activityId:activityPost.activityId
         }).then(res=>{
+            generateAPIDoc("getActivityByActivityId", API.insApi.getActivityByActivityId, "post", {
+                activityId:activityPost.activityId
+            }, res.data)
             console.log(res)
             ADDispatch({
                 type:typeList.setactivityInfo,
@@ -37,6 +41,10 @@ const ActivityDetail=()=>{
                 if(res.data.result.length === 0){
                     activityPost.isAttend = false
                 }
+                generateAPIDoc("isStuHasActivity", API.stuApi.isStuHasActivity, "post", {
+                    stuId:activityPost.stuId,
+                    activityId:activityPost.activityId,
+                }, res.data)
             })
         }
         if(activityPost.isAttend){
@@ -58,6 +66,10 @@ const ActivityDetail=()=>{
                 activityId: activityPost.activityId
             }).then(res => {
                 console.log(res)
+                generateAPIDoc("stuAddActivity", API.stuApi.stuAddActivity,"post", {
+                    stuId: activityPost.stuId,
+                    activityId: activityPost.activityId
+                },res.data)
             })
         }
         // else if(showappend === false && activityPost.stuId !== null) {

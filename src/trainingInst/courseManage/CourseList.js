@@ -6,6 +6,7 @@ import SuperIcon from "../../public/iconfront"
 import Context from "../studentMange/MyContext";
 import API from "../../config/apiUrl"
 import {useHistory} from "react-router-dom";
+import generateAPIDoc from "../../config/generateAPIDoc";
 
 const   CourseList = (props)=>{
     const {state, dispatch} = useContext(Context)
@@ -13,10 +14,12 @@ const   CourseList = (props)=>{
     const history = useHistory()
     useEffect(()=>{
         axios.get(API.insApi.getAllCourseListByInsId+state.insId).then(res=>{
+            generateAPIDoc("getAllCourseListByInsId", API.insApi.getAllCourseListByInsId+state.insId, "get", "", res.data)
             setCourseList(res.data.courseList)
             })
     }, [])
     const courseEdit = (index)=>{
+
         localStorage.setItem("courseInfo", JSON.stringify(courseList[index]))
         history.push({pathname:"/ins/NewCourse"})
 

@@ -12,6 +12,7 @@ import SC from '../../public/StringConst'
 import StudentScore from "./StudentScore";
 import MyRS from "./MyStoreAndReducer";
 import ActivityStateList from "../../public/ActivityStateList";
+import generateAPIDoc from "../../config/generateAPIDoc";
 
 const {typeList} = SC
 
@@ -33,6 +34,7 @@ const ActivityList = (props)=>{
         axios({method: "get",
             url:insApi.getAllActivityByInsid+state.insId,
         }).then(res=>{
+            generateAPIDoc("getAllActivityByInsid",insApi.getAllActivityByInsid+state.insId,"get","", res.data)
             setActivityList(res.data.activityList)
         })
     }
@@ -60,6 +62,7 @@ const ActivityList = (props)=>{
             message.error(ActivityStateList[AS] + ", 不能申请证书")
         }else{
             axios.get(API.insApi.applyCAByInsId+activitId2).then(res=>{
+                generateAPIDoc("applyCAByInsId", API.insApi.applyCAByInsId+activitId2, "get", "", res.data)
                 if(res.data.updateSuccess){
                     message.success("申请成功")
                 }else {
@@ -77,6 +80,7 @@ const ActivityList = (props)=>{
             console.log(item)
         }
         axios.post(API.insApi.updateScore,{scoreList}).then(res=>{
+            generateAPIDoc("updateScore", API.insApi.updateScore, "post",{scoreList},res.data)
             if (res.data.updateSuccess){
                 message.success("修改成绩成功")
             }else{

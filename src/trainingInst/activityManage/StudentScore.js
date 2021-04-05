@@ -5,6 +5,7 @@ import {List, Tabs, Table, Tag, Space, Input, InputNumber} from "antd";
 import axios from "axios";
 import API from '../../config/apiUrl'
 import MyRS from "./MyStoreAndReducer";
+import generateAPIDoc from "../../config/generateAPIDoc";
 
 
 
@@ -25,6 +26,7 @@ const StudentScore = ()=>{
     },[])
     const callback = (courseId)=>{
         axios.get(API.insApi.getAllStudentByCourseId+courseId).then(res=>{
+            generateAPIDoc("getAllStudentByCourseId", API.insApi.getAllStudentByCourseId+courseId, "", res.data)
             SSdispatch({
                 type:typeList.setstudentsAndScores,
                 value:res.data.studentList

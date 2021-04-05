@@ -10,7 +10,7 @@ import ActivityStateList from "../../public/ActivityStateList";
 import StringConst from "../../public/StringConst";
 import API from '../../config/apiUrl'
 import axios from "axios";
-import {saveAs} from 'file-saver'
+import generateAPIDoc from "../../config/generateAPIDoc";
 
 const {typeList} = StringConst
 
@@ -66,6 +66,7 @@ const CertificateList = (props)=>{
     const saveCA = (CAList, index)=>{
         axios.post(API.CaApi.saveCA,CAList).then(res=>{
             console.log(res)
+            generateAPIDoc("saveCA",API.CaApi.saveCA, "post", CAList,res.data)
             if(res.data.insertSuccess){
                 message.success("证书上链成功")
                 changeActivityState(5, certificateList[index].id)
@@ -103,7 +104,7 @@ const CertificateList = (props)=>{
         console.log(postData)
         axios.post(API.CaApi.passApplyCA,postData).then(res=>{
             saveCA(res.data.data, index)
-
+            generateAPIDoc("passApplyCA", API.CaApi.passApplyCA, "post", postData,res.data)
         })
         message.success("修改成功")
     }
@@ -145,6 +146,7 @@ const CertificateList = (props)=>{
     const newList =()=>{
         axios.get(API.CaApi.getAllActivityApplyCA).then(res=>{
             setCertificateList(res.data.activityList)
+            generateAPIDoc("getAllActivityApplyCA",API.CaApi.getAllActivityApplyCA,"get", '', res.data)
         })
     }
     const uploadFile =()=>{

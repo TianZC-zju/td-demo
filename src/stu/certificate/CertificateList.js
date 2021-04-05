@@ -5,6 +5,7 @@ import {useHistory} from "react-router-dom"
 import axios from "axios"
 import API from "../../config/apiUrl"
 import myContext from "../../trainingInst/studentMange/MyContext"
+import generateAPIDoc from "../../config/generateAPIDoc";
 
 
 const HomePage =()=>{
@@ -25,6 +26,7 @@ const HomePage =()=>{
         axios.post(API.stuApi.getCAByStuId, {stuId:state.stuId}).then(res=>{
             console.log(res)
             setCourseList(res.data.activityList)
+            generateAPIDoc("getCAByStuId",API.stuApi.getCAByStuId,"post",{stuId:state.stuId}, res.data)
         })
     },[])
     return(

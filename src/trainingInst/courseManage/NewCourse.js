@@ -6,6 +6,7 @@ import axios from "axios"
 import API from "../../config/apiUrl"
 import Context from "../studentMange/MyContext"
 import Modal from "antd/es/modal";
+import generateAPIDoc from "../../config/generateAPIDoc";
 
 const { RangePicker } = DatePicker;
 
@@ -70,6 +71,19 @@ const NewCourse=()=>{
                 selectTeacherList:cState.selectTeacherList,
 
             }).then(res=>{
+                generateAPIDoc("newACourse", API.insApi.newACourse, "post", {
+                    courseItem:{
+                        name:cState.name,
+                        number:cState.number,
+                        description:cState.description,
+                        pass_score:cState.pass_score,
+                        start_time:cState.value[0].format("YYYY/MM/DD"),end_time:cState.value[1].format("YYYY/MM/DD"),
+                        edu_institution:state.insId,
+                        activity:cState.selectActivityId,
+                    },
+                    selectTeacherList:cState.selectTeacherList,
+
+                }, res.data)
             if(res.data.insertSuccess === true){
                 message.success("新增课程成功1!")
             }else{
@@ -95,6 +109,7 @@ const NewCourse=()=>{
         let courseInfo = localStorage.getItem("courseInfo")
         axios.get(API.insApi.getAllTeacherAndActivityByInsId+state.insId)
             .then(res=>{
+                generateAPIDoc("getAllTeacherAndActivityByInsId",API.insApi.getAllTeacherAndActivityByInsId+state.insId,"get", "", res.data )
                 cDispatch({
                     type:"setteacherList",
                     teacherList:res.data.teacherList,

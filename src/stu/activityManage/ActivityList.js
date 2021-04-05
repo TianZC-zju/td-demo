@@ -8,6 +8,7 @@ import API from "../../config/apiUrl"
 import ActivityStateList from "../ActivityStateList"
 import myContext from "../../trainingInst/studentMange/MyContext"
 import SC from "../../public/StringConst"
+import generateAPIDoc from "../../config/generateAPIDoc";
 const {typeList} = SC
 
 const ActivityList = (props)=>{
@@ -26,6 +27,7 @@ const ActivityList = (props)=>{
         axios.get(API.stuApi.getAllActivityByStuId+state.stuId).then(res =>{
             console.log(res)
             setActivityList(res.data.activityList)
+            generateAPIDoc("getAllActivityByStuId",API.stuApi.getAllActivityByStuId+state.stuId,"get", "",res.data)
         })
     }, [])
 

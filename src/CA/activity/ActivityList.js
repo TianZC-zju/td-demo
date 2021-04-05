@@ -7,6 +7,7 @@ import Modal from "antd/es/modal"
 import Mentions from "antd/es/mentions"
 import StringConst from "../../public/StringConst";
 import ActivityStateList from "../../public/ActivityStateList";
+import generateAPIDoc from "../../config/generateAPIDoc";
 
 
 const {typeList} = StringConst
@@ -24,6 +25,7 @@ const ActivityList = (props)=>{
             url:API.CaApi.getAllActivityApplyStu,
         }).then(res=>{
             setActivityList(res.data.activityList)
+            generateAPIDoc("getAllActivityApplyStu",API.CaApi.getAllActivityApplyStu,"get","",res.data)
         })
     }
     const passItem=(e,index)=>{
@@ -35,6 +37,10 @@ const ActivityList = (props)=>{
                 activityId:activityList[index].id,
                 state: 2
             }).then(res=>{
+                generateAPIDoc("updateActivityStateByActivityId", API.CaApi.updateActivityStateByActivityId, "post",{
+                    activityId:activityList[index].id,
+                    state: 2
+                },res.data )
                 if(res.data.updateSuccess){
                     message.success("活动申请招生完成")
                     newList()
@@ -70,6 +76,11 @@ const ActivityList = (props)=>{
             reject_reason,
             activityId:activityList[currentIndex].id
         }).then(res=>{
+            generateAPIDoc("updateActivityRejectReasonByActivityId", API.CaApi.updateActivityRejectReasonByActivityId, "post",{
+                state:3,
+                reject_reason,
+                activityId:activityList[currentIndex].id
+            }, res.data)
             if(res.data.updateSuccess){
                 message.success("修改成功")
                 newList()

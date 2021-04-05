@@ -9,6 +9,7 @@ import Modal from "antd/es/modal"
 import Mentions from "antd/es/mentions"
 import axios from "axios"
 import API from "../config/apiUrl"
+import generateAPIDoc from "../config/generateAPIDoc";
 const Header=()=>{
     const [isModalVisible, setisModalVisible] = useState(false)
     const [chainInfo, setchainInfo] = useState("")
@@ -37,6 +38,7 @@ const Header=()=>{
         formData.append("file", file1)
         axios.post(API.CaApi.verifyCA,formData,{headers:{'Content-Type': 'multipart/form-data',"seq":chainInfo}}).then(
             res=>{
+                generateAPIDoc("verifyCA",API.CaApi.verifyCA,"post", formData,res.data)
                 if(res.data.data === true){
                     message.success("验证成功, 你的证书是真实可信的")
                 }else{

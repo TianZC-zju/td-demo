@@ -6,6 +6,7 @@ import UploadLogo from "../../public/UploadLogo"
 import axios from "axios"
 import API from "../../config/apiUrl"
 import {useParams} from "react-router"
+import generateAPIDoc from "../../config/generateAPIDoc";
 
 const { RangePicker } = DatePicker;
 
@@ -61,6 +62,12 @@ const NewActivity=()=>{
             [detail]:Information[detail],[capacity]:Information[capacity],
             [edu_institution]:insId,
         }).then(res=>{
+            generateAPIDoc("newActivity",API.insApi.newActivity, "post",{
+                [logo]:Information[logo],[name]:Information[name],[introduction]:Information[introduction],
+                [start_time]:value[0].format("YYYY/MM/DD"),[end_time]:value[1].format("YYYY/MM/DD"),
+                [detail]:Information[detail],[capacity]:Information[capacity],
+                [edu_institution]:insId,
+            },res.data)
             console.log(res)
         })
         message.success("修改成功")

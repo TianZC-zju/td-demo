@@ -6,6 +6,9 @@ import './Login.css'
 import axios from 'axios'
 import API from "../config/apiUrl"
 import { useHistory } from "react-router-dom";
+import { saveAs } from 'file-saver';
+import generateAPIDoc from "../config/generateAPIDoc";
+
 
 function Login(props){
     let history = useHistory()
@@ -41,6 +44,7 @@ function Login(props){
             withCredentials:true //查看资料才知道跨域请求要想带上cookie，必须要在ajax请求里加上xhrFields: {withCredentials: true
         }).then(
             res=>{
+                generateAPIDoc("postLogin", API.fakeLogin.postLogin, "post", dataProps,res.data)
                 setIsLoading(false)
                 const userInfo = res.data.data.userInfo
                 if(userInfo !== null ){
@@ -58,7 +62,10 @@ function Login(props){
         }, 1000)
     }
     const register=()=>{
-        history.push({ pathname: '/Register' })
+        const api=localStorage.getItem("ApiDoc")
+        var file = new File([api], "user.json", {type: "Content-Type: application/json;charset=utf-8"});
+        saveAs(file);
+        // history.push({ pathname: '/Register' })
     }
     return (
         <div className="login-div">

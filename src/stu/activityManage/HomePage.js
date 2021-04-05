@@ -5,6 +5,7 @@ import Header from "../../public/Header"
 import {useHistory} from "react-router-dom"
 import axios from "axios"
 import API from "../../config/apiUrl"
+import generateAPIDoc from "../../config/generateAPIDoc";
 
 
 const HomePage =()=>{
@@ -25,6 +26,7 @@ const HomePage =()=>{
         axios.post(API.stuApi.getAllActiviyByState, {state:2}).then(res=>{
             console.log(res)
             setCourseList(res.data.activityList)
+            generateAPIDoc("getAllActiviyByState", API.stuApi.getAllActiviyByState,"post",{state:2},res.data)
         })
     },[])
     return(

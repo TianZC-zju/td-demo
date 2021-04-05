@@ -8,6 +8,7 @@ import StringConst from "../../public/StringConst";
 import axios from "axios";
 import API from '../../config/apiUrl'
 import Context from "../studentMange/MyContext";
+import generateAPIDoc from "../../config/generateAPIDoc";
 
 
 const InformationManage = ()=>{
@@ -29,6 +30,7 @@ const InformationManage = ()=>{
 
     const submitInf =()=>{
         axios.post(API.insApi.updateInsInfo, {...infoState, id:state.insId}).then(res=>{
+            generateAPIDoc("updateInsInfo", API.insApi.updateInsInfo, "post", {...infoState, id:state.insId}, res.data)
             console.log(res)
             if(res.data.updateSuccess){
                 message.success("修改成功")
@@ -43,6 +45,7 @@ const InformationManage = ()=>{
     }
     useEffect(()=>{
         axios.get(API.insApi.getInsInfoByInsId+state.insId).then(res=>{
+            generateAPIDoc("getInsInfoByInsId", API.insApi.getInsInfoByInsId+state.insId, "get", "", res.data)
             infoDispatch({
                 type:typeList.setinsInfo,
                 value:res.data.insInfo[0]

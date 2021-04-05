@@ -7,6 +7,7 @@ import NameIndex from "./NameIndex"
 import API from "../../config/apiUrl"
 import {useContext} from 'react'
 import Context from "../studentMange/MyContext";
+import generateAPIDoc from "../../config/generateAPIDoc";
 
 // const fakeDataUrl2 = `https://www.fastmock.site/mock/76531f6c539f5dbd8b4fa43216bb135a/student/customer/activityManage`;
 // const dataUrl = `http://lyxkaka.e1.luyouxia.net:33880/trainingInst/course`
@@ -20,6 +21,7 @@ const StudentList = (props)=>{
         axios({method: "get",
             url:API.insApi.getAllStudentByInsId+state.insId,
         }).then(res=>{
+            generateAPIDoc("getAllStudentByInsId", API.insApi.getAllStudentByInsId+state.insId, "get", "", res.data)
             console.log(res.data.studentList)
             setStudentList(res.data.studentList)
         })
